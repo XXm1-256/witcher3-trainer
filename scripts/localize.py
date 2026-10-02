@@ -32,7 +32,7 @@ for path in source_files:
     for name, marker in aliases.items():
         source = source.replace('"' + marker + '"', '"' + name + '"')
     if path.name == 'MainForm.Theme.cs':
-        source = source.replace('SetToolTip(close,"Off")', 'SetToolTip(close,"Close")')
+        source = source.replace('["Minimize","Maximize or restore","Off"]', '["Minimize","Maximize or restore","Close"]')
     path.write_text(source, encoding='utf-8')
 
 catalog_path = target / 'Witcher3Modifier/ItemCatalog.json'

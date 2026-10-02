@@ -2,7 +2,7 @@
 
 调整金币和经验，添加物品、打造装备，也能按需开启战斗与探索辅助。
 
-**[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.2/Witcher3Trainer-v0.1.2-zh-CN-win-x64.zip)** · **[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.2/Witcher3Trainer-v0.1.2-en-win-x64.zip)** · [发布记录](https://github.com/XXm1-256/witcher3-trainer/releases)
+**[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.4/Witcher3Trainer-v0.1.2-zh-CN-win-x64.zip)** · **[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.4/Witcher3Trainer-v0.1.2-en-win-x64.zip)** · [发布记录](https://github.com/XXm1-256/witcher3-trainer/releases)
 
 [English introduction](README.md)
 
