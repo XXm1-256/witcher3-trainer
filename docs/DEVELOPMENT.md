@@ -1,5 +1,7 @@
 # Developer tutorial
 
+[简体中文](DEVELOPMENT.zh-CN.md)
+
 ## Build a reproducible baseline
 
 Use Windows x64, .NET 8 SDK, and Python 3.10+ for English. Clone the repository; run `scripts/build.ps1 -Language zh-CN`, then `-Language en`. All required embedded inputs are included: item/level JSON, equipment presets and the wolf image. Game extraction is not a source-build prerequisite. Players receive self-contained executables; source developers need the SDK.

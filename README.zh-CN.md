@@ -38,4 +38,6 @@ powershell -ExecutionPolicy Bypass -File scripts/build.ps1 -Language en
 
 成品位于`dist/zh-CN`和`dist/en`。[开发与学习教程](docs/DEVELOPMENT.zh-CN.md)提供代码阅读顺序、构建、离线测试和功能维护流程。
 
-原创程序代码采用[MIT](LICENSE)，游戏元数据、商标和狼学派图像的权利说明见[NOTICE](NOTICE.md)。本项目为非官方同人项目。
+原创程序代码采用[MIT](LICENSE)，游戏元数据、商标和狼学派图像的权利说明见[NOTICE](NOTICE.zh-CN.md)。本项目为非官方同人项目。
+
+[贡献指南](CONTRIBUTING.zh-CN.md)

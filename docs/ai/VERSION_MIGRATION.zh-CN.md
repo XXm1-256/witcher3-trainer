@@ -1,5 +1,7 @@
 # AI Agent游戏更新与地址迁移教程
 
+[English](VERSION_MIGRATION.md)
+
 ## 哪些地址会变
 
 | 数据 | 变化时机 | 正确处理 |

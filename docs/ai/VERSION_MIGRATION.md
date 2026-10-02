@@ -1,5 +1,7 @@
 # Game-version address migration for AI Agents
 
+[简体中文](VERSION_MIGRATION.zh-CN.md)
+
 ## What changes
 
 | Data | Lifetime / update risk | Correct treatment |

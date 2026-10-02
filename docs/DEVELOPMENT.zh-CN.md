@@ -1,5 +1,7 @@
 # 开发与学习教程
 
+[English](DEVELOPMENT.md)
+
 ## 建立可重复构建的起点
 
 Windows安装.NET 8 SDK，英文生成另需Python 3.10以上。克隆后运行`scripts/build.ps1 -Language zh-CN`及`-Language en`。源码已包含物品/等级JSON、装备预设与狼头资源，不要求先解包游戏才能编译。玩家成品自包含，源码开发需要SDK。

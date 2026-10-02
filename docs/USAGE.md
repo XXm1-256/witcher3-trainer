@@ -1,5 +1,7 @@
 # Player guide
 
+[简体中文](USAGE.zh-CN.md)
+
 1. Extract the language package into a writable folder. Load a game save, then run `Witcher3Modifier.exe`.
 2. Use the Common functions page for gold, multipliers and switches. Hover the round **i** for short instructions.
 3. **Save switches and multipliers** remembers selected settings. **Hotkeys** controls all shortcuts. Input boxes should continue accepting normal typing.
