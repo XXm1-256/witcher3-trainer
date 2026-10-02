@@ -2,7 +2,7 @@
 
 [English](PROJECT_STATE.md)
 
-## 源码与资源
+## 游戏版本与构建资源
 
 中文源码位于Witcher3Modifier，英文由scripts/localize.py生成；构建使用三份元数据与狼头图像。当前配置为5.00c Windows DX12 x64，exe SHA256为9406ECCC12B68E08920931442EF6A57340E910D3E01F2082E88232487433FE51。其他文件哈希需要独立适配验证。
 

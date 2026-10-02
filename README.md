@@ -1,45 +1,63 @@
 # The Witcher 3 Trainer
 
-[简体中文](README.zh-CN.md) · [Player guide](docs/USAGE.md) · [Developer guide](docs/DEVELOPMENT.md) · [AI Agent guide](docs/ai/AGENT_GUIDE.md)
+Adjust gold and XP, add items, customize equipment, and turn on combat or exploration helpers as needed.
 
-A Windows x64 external trainer for single-player The Witcher 3, with Chinese and English executables. It connects to the running game, uses validated memory structures and the game's existing gameplay flows, and provides a desktop interface with numpad shortcuts.
+**[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.2/Witcher3Trainer-v0.1.2-en-win-x64.zip)** · **[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.2/Witcher3Trainer-v0.1.2-zh-CN-win-x64.zip)** · [All releases](https://github.com/XXm1-256/witcher3-trainer/releases)
+
+[简体中文介绍](README.zh-CN.md)
 
 ## Download and use
 
-Download the **zh-CN** or **en** ZIP from [Releases](https://github.com/XXm1-256/witcher3-trainer/releases), extract it into a writable folder, load a game save, and launch `Witcher3Modifier.exe`. The release is self-contained; players do not need the .NET SDK. Keep each language package in its own folder. Save progress before applying equipment changes or teleporting.
+1. Download and extract a package. `Witcher3Modifier.exe` is at the top level; no separate .NET installation is needed.
+2. Start the game and load a save, then open the trainer.
+3. Click a function or use its displayed shortcut.
+
+All shortcuts use the **numeric keypad** with Num Lock on. The **Hotkeys** switch at the top disables them together.
+
+Save your progress before changing equipment, deleting items or teleporting. See the [player guide](docs/USAGE.md) for detailed instructions.
 
 ## Features
 
-- Gold editing and gold/experience multipliers.
-- Health, stamina, breath, toxicity, horse stamina/fear, Adrenaline and combat helpers.
-- Item and ammunition preservation, equipment repair, crafting and equipment-level helpers.
-- Item search and quantity selection, DLC metadata, equipment creation/editing, modifier targets and multi-item deletion.
-- Map-marker teleport, fall protection, Cat night vision, movement/jump/swimming controls.
-- Weather, time, hair/beard and visual experiments; Gwent victory and skill reset.
-- Nearby container looting and herb gathering within 5 meters, with pause/loading recovery.
-- Saved switches/multipliers, shortcut master switch, tooltips and activation feedback.
+- **Choose your progression pace:** set gold directly or adjust gold income and XP multipliers.
+- **Spend less during combat:** infinite health, stamina, breath and Adrenaline; no toxicity; item and ammunition preservation; one-hit kills.
+- **Manage your inventory:** search for items, choose how many to add, find equipment by level, and delete several selected items at once.
+- **Customize your gear:** choose a base weapon or armor, add modifiers and enchantments, adjust attributes, and repair durability.
+- **Explore more easily:** teleport to map markers, prevent fall damage, use Cat night vision, and adjust movement, jump and swimming multipliers.
+- **Try something different:** change weather, time, hair and beard; win the current Gwent match or reset your skill build.
+- **Loot and gather:** collect eligible container items and harvest herbs within 5 meters.
 
-## Compatibility and validation
+Common functions are on the first page. Hover the round **i** for instructions. Enable settings saving at the top to restore switches and multipliers next time.
 
-The current executable profile was developed against **5.00c, Windows DX12 x64**. The repository includes a legacy reference address profile; this does not establish compatibility with every edition or unknown executable. Operations perform individual code/object checks. See [version migration](docs/ai/VERSION_MIGRATION.md) before adapting a new build.
+## Before using
 
-Builds, offline regression checks and English UI checks have been run. Many gameplay functions have prior user observations, but this is not a complete automated gameplay suite. Pause-recovery handling was checked offline; swimming displacement, very high movement multipliers, occasional weapon auto-swaps and all complex teleport destinations still need broader gameplay acceptance. See [project state](docs/ai/PROJECT_STATE.md).
+- For Windows x64 and single-player use. The current target is **5.00c with DX12**.
+- DLC items require their corresponding content installed.
+- Functions operate while the game runs and leave its files unchanged.
+- Teleporting to complex terrain may place you in the air or below a bridge. Use **No fall damage**.
+- Some equipment attributes have a minimum set by the game. Required level can change with the item and its attributes; estimates help when choosing gear.
 
-English UI labels and messages are translated. The English item catalog displays internal English game identifiers; some are abbreviated/technical rather than the official localized inventory name. Chinese search aliases are retained.
+## Common questions
 
-## Build
+**Why hasn't an added item appeared yet?**
 
-On Windows, install **.NET 8 SDK**. English generation also requires **Python 3.10+**.
+Return to a scene where Geralt can move, let the addition finish, then add the next item. Some actions wait during menus, story scenes or loading.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/build.ps1 -Language zh-CN
-powershell -ExecutionPolicy Bypass -File scripts/build.ps1 -Language en
-```
+**What happens to auto-loot when I pause?**
 
-Outputs: `dist/zh-CN/Witcher3Modifier.exe` and `dist/en/Witcher3Modifier.exe`.
+It waits and resumes during gameplay. Locked, quest, special-interaction and theft-sensitive containers are skipped.
 
-[Architecture and learning path](docs/DEVELOPMENT.md) · [Contribution rules](CONTRIBUTING.md) · [AI version migration](docs/ai/VERSION_MIGRATION.md)
+**What if teleporting leaves me airborne or my character is invisible?**
 
-## License and attribution
+Place another marker and teleport again. A reload is usually unnecessary.
 
-Original trainer code is released under [MIT](LICENSE). Game metadata, trademarks and the wolf medallion artwork have separate attribution and rights described in [NOTICE](NOTICE.md). This is an unofficial fan project.
+**How do I report a problem?**
+
+Open an [issue](https://github.com/XXm1-256/witcher3-trainer/issues) with the game version, steps and message shown. Errors are recorded in `modifier.log.jsonl` beside the trainer; include the relevant excerpt.
+
+English item labels use the game's internal English names. Some may look different from the names shown in your inventory.
+
+## Source and tutorials
+
+To build the trainer, change a feature or learn how it works, start with the [developer tutorial](docs/DEVELOPMENT.md). For game updates, see [address migration](docs/ai/VERSION_MIGRATION.md). AI development tools have a separate [agent guide](docs/ai/AGENT_GUIDE.md).
+
+[Compatibility and verification](docs/ai/PROJECT_STATE.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE) · [Asset attribution](NOTICE.md)

@@ -1,43 +1,61 @@
 # 巫师3修改器
 
-[English](README.md) · [玩家指南](docs/USAGE.zh-CN.md) · [开发教程](docs/DEVELOPMENT.zh-CN.md) · [AI Agent接档指南](docs/ai/AGENT_GUIDE.zh-CN.md)
+调整金币和经验，添加物品、打造装备，也能按需开启战斗与探索辅助。
 
-Windows x64单机外部修改器，提供中文、英文可执行版本。自动连接正在运行的游戏，通过校验过的内存结构和游戏现有流程执行功能，支持小键盘快捷键、保存设置及操作反馈音。
+**[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.2/Witcher3Trainer-v0.1.2-zh-CN-win-x64.zip)** · **[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.2/Witcher3Trainer-v0.1.2-en-win-x64.zip)** · [发布记录](https://github.com/XXm1-256/witcher3-trainer/releases)
+
+[English introduction](README.md)
 
 ## 下载和使用
 
-从[发布页](https://github.com/XXm1-256/witcher3-trainer/releases)下载zh-CN或en压缩包，解压至可写文件夹。游戏载入存档后，打开文件夹中的`Witcher3Modifier.exe`。玩家无需安装.NET SDK。不同语言分别解压，修改装备或传送前先保存进度。
+1. 下载并解压，打开文件夹就能找到 `Witcher3Modifier.exe`，无需另外安装 .NET。
+2. 启动游戏并载入存档，再打开修改器。
+3. 点击需要的功能，或使用旁边标出的快捷键。
+
+快捷键全部使用**小键盘**，请开启 Num Lock。顶部“快捷键”开关可以统一停用按键。
+
+修改装备、删除物品或传送前，先保存一次进度。详细操作见[玩家指南](docs/USAGE.zh-CN.md)。
 
 ## 功能
 
-- 金币修改、金币收入与经验倍率。
-- 生命、活力、呼吸、毒性、马匹活力/恐惧、肾上腺素与战斗辅助。
-- 物品与弹药不减、装备修复、制作与穿戴等级辅助。
-- 搜索及添加物品、指定数量、DLC物品目录、自定义与修改装备、词条目标数值、多选删除。
-- 地图标记传送、无落地伤害、猫眼夜视、移动/跳跃/游泳倍率。
-- 天气、时间、发型/胡须与视觉实验，昆特牌获胜和洗点。
-- 五米内容器拾取与草药采集，暂停/读档等待后继续。
-- 开关与倍率保存、快捷键总开关、功能提示与音效。
+- **调整成长速度**：直接设置金币，调整金币收入和经验倍率。
+- **减少战斗中的消耗**：无限生命、活力、呼吸和肾上腺素，无毒性，物品与弹药不减，一击必杀。
+- **整理物品与装备**：搜索并添加物品、选择数量、按等级查找装备，多选删除背包物品。
+- **打造想用的装备**：选择基础武器或护甲，添加词条和附魔，调整属性数值，修复耐久。
+- **方便赶路和探索**：地图标记传送、无落地伤害、猫眼夜视，以及移动、跳跃和游泳倍率。
+- **换一种玩法**：调整天气、时间、发型和胡须，立即赢下昆特牌对局，一键洗点。
+- **拾取与采集**：自动收取五米内可拾取容器的物品，并采集附近草药。
 
-## 适配和验证范围
+常用功能集中在首页。鼠标移到圆形 **i** 上可以查看用法；开启顶部“保存开关与倍率”，下次启动就会恢复设置。
 
-当前开发适配基于**5.00c、Windows DX12 x64**。源码中的旧版参考地址不代表所有版本均适配；具体操作会校验代码入口与对象。维护新版本先读[地址迁移教程](docs/ai/VERSION_MIGRATION.zh-CN.md)。
+## 使用前了解这些
 
-已进行构建、离线回归与英文界面检查；部分实机功能有玩家反馈，尚没有覆盖全部功能的自动化游戏测试。最新暂停恢复逻辑经过离线检查，游泳推进速度、高倍率运动、偶发武器自动替换和全部复杂地形传送仍待更多实机验收。[当前工程状态](docs/ai/PROJECT_STATE.md)明确区分验证层级。
+- 供 Windows x64 单机游戏使用，当前适配目标为 **5.00c 的 DX12 版本**。
+- 添加 DLC 物品需要安装对应内容。
+- 功能在游戏运行时生效，保持游戏文件原样。
+- 复杂地形传送可能落到空中或桥下，建议搭配“无落地伤害”。
+- 部分装备属性有游戏自身的下限；需要等级会随装备和属性变化，预估结果供选择时参考。
 
-英文界面及提示已翻译，物品名采用内部英文标识，部分名称是编号或技术名称，保留中文搜索别名。
+## 常见问题
 
-## 从源码制作
+**添加的物品还没出现怎么办？**
 
-Windows安装.NET 8 SDK；英文构建另需Python 3.10以上。
+回到角色可以移动的画面，让这次添加完成，再添加下一件。暂停、剧情或读档时，部分操作会等待。
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/build.ps1 -Language zh-CN
-powershell -ExecutionPolicy Bypass -File scripts/build.ps1 -Language en
-```
+**自动拾取在暂停时会怎样？**
 
-成品位于`dist/zh-CN`和`dist/en`。[开发与学习教程](docs/DEVELOPMENT.zh-CN.md)提供代码阅读顺序、构建、离线测试和功能维护流程。
+会等待，回到游玩画面后继续。上锁、任务、特殊交互和会被判为偷窃的容器会跳过。
 
-原创程序代码采用[MIT](LICENSE)，游戏元数据、商标和狼学派图像的权利说明见[NOTICE](NOTICE.zh-CN.md)。本项目为非官方同人项目。
+**传送后停在空中，或看不到角色模型怎么办？**
 
-[贡献指南](CONTRIBUTING.zh-CN.md)
+换一个地图标记，再传送一次，通常不必读档。
+
+**遇到功能问题怎么反馈？**
+
+在 [Issues](https://github.com/XXm1-256/witcher3-trainer/issues) 写下游戏版本、操作步骤和出现的提示。修改器旁的 `modifier.log.jsonl` 会记录错误，可附上相关片段。
+
+## 源码与教程
+
+想自己编译、修改功能或了解实现方式，可以从[开发教程](docs/DEVELOPMENT.zh-CN.md)开始。维护游戏更新时，参考[地址迁移教程](docs/ai/VERSION_MIGRATION.zh-CN.md)；AI 开发工具另有[开发指南](docs/ai/AGENT_GUIDE.zh-CN.md)。
+
+[兼容性与验证说明](docs/ai/PROJECT_STATE.zh-CN.md) · [贡献指南](CONTRIBUTING.zh-CN.md) · [MIT 许可证](LICENSE) · [资源权利说明](NOTICE.zh-CN.md)

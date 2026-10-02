@@ -5,7 +5,7 @@
 1. Extract the language package into a writable folder. Load a game save, then run `Witcher3Modifier.exe`.
 2. Use the Common functions page for gold, multipliers and switches. Hover the round **i** for short instructions.
 3. **Save switches and multipliers** remembers selected settings. **Hotkeys** controls all shortcuts. Input boxes should continue accepting normal typing.
-4. After adding an item, return to a movable gameplay scene so the queued request finishes before adding another item. Pauses, cutscenes and loading can delay game-thread operations. No-toxicity activation may be unavailable during story scenes.
+4. After adding an item, return to a scene where Geralt can move and wait for the item to appear before adding another. Menus, cutscenes and loading can delay some actions. No toxicity may be unavailable during story scenes.
 
 ## Shortcuts
 
@@ -22,9 +22,9 @@ All numbers and symbols below are from the **numeric keypad**, with Num Lock on.
 
 ## Items and equipment
 
-Select a catalog item, set quantity, then use **Give selected item**. DLC entries require the relevant content installed. Reference level filters catalog/base equipment; inventory filters use the actual item instance. Unspecified catalog levels may depend on generation rules.
+Select an item, set the quantity, then click **Add selected item**. DLC items require the corresponding content installed. Add items and Custom equipment use reference levels to help find suitable gear; Inventory uses each item's current required level. Some items receive their level when they are added.
 
-Choose the base weapon or armor for equipment creation. Select modifiers and their target values, then validate before applying. Type hints indicate weapon/armor suitability. Native base attributes can impose a minimum; the reachable-value option helps when the requested target is unavailable. Estimated level is a guide, not a freely editable independent level field. The game confirms the final level and damage range. Save/reload verifies persistence.
+Choose a base weapon or armor, select modifiers and enter the values you want. Check the setup before applying it. Labels beside the modifiers show which equipment they fit. Some items have a minimum for an attribute; use **Use reachable value** if your chosen value cannot be applied. Required level is estimated from the equipment and its attributes, rather than set separately. Check the final level and damage range in the game. Save and reload to check that your changes remain.
 
 Use Ctrl-click/Shift-click for multi-item deletion. The specified quantity applies to each selected item, limited by its available amount. Verify the confirmation list first.
 
@@ -32,6 +32,6 @@ Use Ctrl-click/Shift-click for multi-item deletion. The specified quantity appli
 
 Place a marker in the current region and return to gameplay. Some destinations load slowly or have several vertical surfaces; a bridge marker can resolve below the bridge. Teleport may arrive in the air: enable **No fall damage**. If the player model is missing while airborne, mark another place and teleport again; a reload is usually unnecessary. A failure is reported in status/log output so another attempt can be made.
 
-Auto-loot/gather affects eligible containers and herbs within 5 meters. It skips locked, quest, special-interaction and theft-sensitive containers. Pauses/loading wait and resume; validated entry/type failures stop the feature and are logged. Some scripted containers are intentionally excluded.
+Turn on nearby looting and gathering to collect container items and herbs within 5 meters. Locked, quest, special-interaction and theft-sensitive containers are skipped. It waits during pauses/loading and resumes during gameplay. If it stops with an error, check the message and the log; some story containers cannot be collected this way.
 
-Logs are written beside the executable and contain diagnostic addresses/version information. Share only a redacted excerpt. Keep a separate game save before destructive inventory changes.
+If something goes wrong, include the message and the relevant lines from `modifier.log.jsonl` beside the executable when reporting it. Keep a separate save before deleting items or changing equipment.

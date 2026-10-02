@@ -2,7 +2,7 @@
 
 [简体中文](PROJECT_STATE.zh-CN.md)
 
-## Authoritative inputs
+## Game version and build inputs
 
 Chinese source under `Witcher3Modifier`, generated English source via `scripts/localize.py`, and three embedded metadata files plus the wolf image. Game profile: 5.00c Windows DX12 x64, SHA256 `9406ECCC12B68E08920931442EF6A57340E910D3E01F2082E88232487433FE51`. Other executable hashes need independent verification.
 
