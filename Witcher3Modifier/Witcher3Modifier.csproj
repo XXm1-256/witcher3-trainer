@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ItemCatalog.json" />
+    <EmbeddedResource Include="EquipmentLevels.json" />
+    <EmbeddedResource Include="..\DesignPreview\assets\wolf-school-head-repaired.png" LogicalName="Witcher3Modifier.WolfHead.png" />
+    <EmbeddedResource Include="..\Research\equipment_presets.json" LogicalName="Witcher3Modifier.EquipmentPresets.json" />
+  </ItemGroup>
+
+</Project>

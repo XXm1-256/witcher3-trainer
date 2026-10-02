@@ -1,0 +1,626 @@
+{
+  "Affixes": [
+    {
+      "Id": "MA_SlashingResistance",
+      "DisplayName": "劈斩抗性",
+      "Attributes": [
+        {
+          "Name": "slashing_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_PiercingResistance",
+      "DisplayName": "穿刺抗性",
+      "Attributes": [
+        {
+          "Name": "piercing_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_BludgeoningResistance",
+      "DisplayName": "钝击抗性",
+      "Attributes": [
+        {
+          "Name": "bludgeoning_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_RendingResistance",
+      "DisplayName": "怪物伤害抗性",
+      "Attributes": [
+        {
+          "Name": "rending_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_ElementalResistance",
+      "DisplayName": "元素抗性",
+      "Attributes": [
+        {
+          "Name": "elemental_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_PoisonResistance",
+      "DisplayName": "中毒抗性",
+      "Attributes": [
+        {
+          "Name": "poison_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_BleedingResistance",
+      "DisplayName": "流血抗性",
+      "Attributes": [
+        {
+          "Name": "bleeding_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_BurningResistance",
+      "DisplayName": "燃烧抗性",
+      "Attributes": [
+        {
+          "Name": "burning_resistance_perc",
+          "type": "base",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_Vitality",
+      "DisplayName": "生命值",
+      "Attributes": [
+        {
+          "Name": "vitality",
+          "type": "base",
+          "min": "10",
+          "max": "50"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_AdrenalineGain",
+      "DisplayName": "肾上腺素获取",
+      "Attributes": [
+        {
+          "Name": "focus_gain",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_AttackPowerMult",
+      "DisplayName": "攻击力百分比",
+      "Attributes": [
+        {
+          "Name": "attack_power",
+          "type": "mult",
+          "min": "0.05",
+          "max": "0.08"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_AttackPowerAdd",
+      "DisplayName": "攻击力数值",
+      "Attributes": [
+        {
+          "Name": "attack_power",
+          "type": "add",
+          "min": "10",
+          "max": "40"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_StaminaRegeneration",
+      "DisplayName": "耐力恢复",
+      "Attributes": [
+        {
+          "Name": "staminaRegen",
+          "type": "mult",
+          "min": "0.01"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_ArmorPenetration",
+      "DisplayName": "护甲穿透",
+      "Attributes": [
+        {
+          "Name": "armor_reduction",
+          "min": "10",
+          "max": "40"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_CriticalChance",
+      "DisplayName": "暴击几率",
+      "Attributes": [
+        {
+          "Name": "critical_hit_chance",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_CriticalDamage",
+      "DisplayName": "暴击伤害",
+      "Attributes": [
+        {
+          "Name": "critical_hit_damage_bonus",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.1"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_Indestructible",
+      "DisplayName": "装备耐久不减",
+      "Attributes": [],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_AardIntensity",
+      "DisplayName": "阿尔德强度",
+      "Attributes": [
+        {
+          "Name": "spell_power_aard",
+          "type": "mult",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_IgniIntensity",
+      "DisplayName": "伊格尼强度",
+      "Attributes": [
+        {
+          "Name": "spell_power_igni",
+          "type": "mult",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_QuenIntensity",
+      "DisplayName": "昆恩强度",
+      "Attributes": [
+        {
+          "Name": "spell_power_quen",
+          "type": "mult",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_YrdenIntensity",
+      "DisplayName": "亚登强度",
+      "Attributes": [
+        {
+          "Name": "spell_power_yrden",
+          "type": "mult",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_AxiiIntensity",
+      "DisplayName": "亚克席强度",
+      "Attributes": [
+        {
+          "Name": "spell_power_axii",
+          "type": "mult",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_Money",
+      "DisplayName": "金币奖励加成",
+      "Attributes": [
+        {
+          "Name": "bonus_money",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_MonsterHunter",
+      "DisplayName": "击杀怪物经验加成",
+      "Attributes": [
+        {
+          "Name": "nonhuman_exp_bonus_when_fatal",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_HumanHunter",
+      "DisplayName": "击杀人类经验加成",
+      "Attributes": [
+        {
+          "Name": "human_exp_bonus_when_fatal",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.04"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_BleedingChance",
+      "DisplayName": "流血几率",
+      "Attributes": [
+        {
+          "Name": "BleedingEffect",
+          "is_ability": "true"
+        },
+        {
+          "Name": "buff_apply_chance",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        },
+        {
+          "Name": "desc_bleedingchance_mult",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_FreezingChance",
+      "DisplayName": "冰冻几率",
+      "Attributes": [
+        {
+          "Name": "SlowdownFrostEffect",
+          "is_ability": "true"
+        },
+        {
+          "Name": "buff_apply_chance",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        },
+        {
+          "Name": "desc_freezingchance_mult",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_PoisonChance",
+      "DisplayName": "中毒几率",
+      "Attributes": [
+        {
+          "Name": "PoisonEffect",
+          "is_ability": "true"
+        },
+        {
+          "Name": "buff_apply_chance",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        },
+        {
+          "Name": "desc_poinsonchance_mult",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_BurningChance",
+      "DisplayName": "燃烧几率",
+      "Attributes": [
+        {
+          "Name": "BurningEffect",
+          "is_ability": "true"
+        },
+        {
+          "Name": "buff_apply_chance",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        },
+        {
+          "Name": "desc_burningchance_mult",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    },
+    {
+      "Id": "MA_StaggerChance",
+      "DisplayName": "踉跄几率",
+      "Attributes": [
+        {
+          "Name": "StaggerEffect",
+          "is_ability": "true"
+        },
+        {
+          "Name": "buff_apply_chance",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        },
+        {
+          "Name": "desc_staggerchance_mult",
+          "type": "add",
+          "min": "0.01",
+          "max": "0.05"
+        }
+      ],
+      "Source": "Research/unpacked/xml/gameplay/items/def_item_quality.xml"
+    }
+  ],
+  "Enchantments": [
+    {
+      "Id": "Runeword 1",
+      "Ability": "Runeword 1 _Stats",
+      "DisplayName": "补充",
+      "Description": "释放法印之后，消耗 1 点肾上腺素，为下次出剑附加该法印的效果。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 2",
+      "Ability": "Runeword 2 _Stats",
+      "DisplayName": "断裂",
+      "Description": "回旋剑舞的距离扩大 $S$ 码，怒气爆发扩大 $S$ 码。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 4",
+      "Ability": "Runeword 4 _Stats",
+      "DisplayName": "活力",
+      "Description": "生命值全满时，生命恢复量转为下一击的额外伤害（最多 +$I$%）。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 5",
+      "Ability": "Runeword 5 _Stats",
+      "DisplayName": "永存",
+      "Description": "护甲匠的工作台与研磨石的加成永不消退。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 6",
+      "Ability": "Runeword 6 _Stats",
+      "DisplayName": "饺子",
+      "Description": "吃下食物恢复的生命值提高 $I$%，但所有食物吃起来都和波兰饺子一个味。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 8",
+      "Ability": "Runeword 8 _Stats",
+      "DisplayName": "安抚",
+      "Description": "抵达最高等级后，肾上腺素值会逐渐下降，直到 0 为止。期间生命值与活力再生加速，毒性下降速度较快。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 10",
+      "Ability": "Runeword 10 _Stats",
+      "DisplayName": "生机",
+      "Description": "每次致命一击可以恢复 $I$% 活力。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 11",
+      "Ability": "Runeword 11 _Stats",
+      "DisplayName": "延长",
+      "Description": "每次敌人未挡下攻击，都会使魔药持续时间延长 $S$ 秒。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Runeword 12",
+      "Ability": "Runeword 12 _Stats",
+      "DisplayName": "雀跃",
+      "Description": "用剑打出的致命一击提供 $F$ 至 $F$ 点肾上腺素。",
+      "Equipment": "剑",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 1",
+      "Ability": "Glyphword 1 _Stats",
+      "DisplayName": "偏转",
+      "Description": "使护甲偏转所有箭矢。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 2",
+      "Ability": "Glyphword 2 _Stats",
+      "DisplayName": "轻盈",
+      "Description": "所有装备的护甲类物品皆视为轻甲。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 3",
+      "Ability": "Glyphword 3 _Stats",
+      "DisplayName": "平衡",
+      "Description": "所有装备的护甲类物品皆视为中甲。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 4",
+      "Ability": "Glyphword 4 _Stats",
+      "DisplayName": "沉重",
+      "Description": "所有装备的护甲类物品皆视为重甲。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 5",
+      "Ability": "Glyphword 5 _Stats",
+      "DisplayName": "报应",
+      "Description": "有 $I$% 几率可将部分伤害反弹给攻击者。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 6",
+      "Ability": "Glyphword 6 _Stats",
+      "DisplayName": "耗力",
+      "Description": "用阿尔德法印击中敌人可使其活力降低 $I$%。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 7",
+      "Ability": "Glyphword 7 _Stats",
+      "DisplayName": "火舞",
+      "Description": "伊格尼的基本攻击会灼烧 360 度半径的所有敌人，但不再附加燃烧效果。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 10",
+      "Ability": "Glyphword 10 _Stats",
+      "DisplayName": "强夺",
+      "Description": "受到亚克席法印影响的敌人死亡后，会将效果转移给最近的目标。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 12",
+      "Ability": "Glyphword 12 _Stats",
+      "DisplayName": "助燃",
+      "Description": "被伊格尼法印点燃的敌人有 $I$% 的几率会点燃半径 $S$ 码内的其他敌人。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 14",
+      "Ability": "Glyphword 14 _Stats",
+      "DisplayName": "诱骗",
+      "Description": "受到亚克席法印影响的敌人，每攻击 1 次，便会延长法印时间 $S$ 秒。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 15",
+      "Ability": "Glyphword 15 _Stats",
+      "DisplayName": "纠缠",
+      "Description": "亚登法印的陷阱击中敌人时，会在原地留下亚登法印。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 17",
+      "Ability": "Glyphword 17 _Stats",
+      "DisplayName": "保护",
+      "Description": "进入战斗时，有 $I$% 的几率在不消耗活力的状况下自动获得昆恩之盾。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 18",
+      "Ability": "Glyphword 18 _Stats",
+      "DisplayName": "附身",
+      "Description": "受到亚克席法印影响的敌人死后，效果会转移到附近的目标上。目标每攻击命中一次，效果持续时间便延长 $S$ 秒。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    },
+    {
+      "Id": "Glyphword 20",
+      "Ability": "Glyphword 20 _Stats",
+      "DisplayName": "爆发",
+      "Description": "被伊格尼法印点燃的敌人死时会爆炸，再点燃附近的敌人。",
+      "Equipment": "胸甲",
+      "Source": "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml"
+    }
+  ],
+  "Validation": "XML/script consistency only; runtime and save persistence pending",
+  "Sources": {
+    "Research/unpacked/xml/gameplay/items/def_item_quality.xml": "ca642a958b9b48d123f3c1901a1108dd4406921e882771fb110b7e8f623471f3",
+    "Research/unpacked/ep1/dlc/ep1/data/gameplay/items/def_item_ep1_runewords.xml": "c3f27836e3d2beac7804350a2a9a9e8c4e2f1359204b62a3ab3f8367650279d4"
+  }
+}

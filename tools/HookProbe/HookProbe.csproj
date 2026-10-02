@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Witcher3Modifier\GameEquipmentNumbers.Reduction.cs" Link="GameEquipmentNumbers.Reduction.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItem.cs" Link="GameItem.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameEquipmentLevels.cs" Link="GameEquipmentLevels.cs" />
+    <EmbeddedResource Include="..\..\Witcher3Modifier\EquipmentLevels.json" LogicalName="Witcher3Modifier.EquipmentLevels.json" />
+    <Compile Include="..\..\Witcher3Modifier\GameEquipment.cs" Link="GameEquipment.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameEquipmentNumbers.cs" Link="GameEquipmentNumbers.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameInventory.cs" Link="GameInventory.cs" />
+    <Compile Include="..\..\Witcher3Modifier\ErrorLog.cs" Link="ErrorLog.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameTeleport*.cs" Link="%(Filename)%(Extension)" />
+    <EmbeddedResource Include="..\..\Research\equipment_presets.json" LogicalName="Witcher3Modifier.EquipmentPresets.json" />
+    <EmbeddedResource Include="..\..\Witcher3Modifier\ItemCatalog.json" LogicalName="Witcher3Modifier.ItemCatalog.json" />
+    <Compile Include="..\..\Witcher3Modifier\GameVersion.cs" Link="GameVersion.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameWeight.cs" Link="GameWeight.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameMoney.cs" Link="GameMoney.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameDebugFacts.cs" Link="GameDebugFacts.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameInventoryHooks.cs" Link="GameInventoryHooks.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameExperience.cs" Link="GameExperience.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameProcessPause.cs" Link="GameProcessPause.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.Adrenaline.cs" Link="GameItemScheduler.Adrenaline.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.PlayerMotion.cs" Link="GameItemScheduler.PlayerMotion.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.SwimSpeed.cs" Link="GameItemScheduler.SwimSpeed.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.AutoLoot.cs" Link="GameItemScheduler.AutoLoot.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.Fun.cs" Link="GameItemScheduler.Fun.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.ActorScript.cs" Link="GameItemScheduler.ActorScript.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.EnemySpeed.cs" Link="GameItemScheduler.EnemySpeed.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.Respec.cs" Link="GameItemScheduler.Respec.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.cs" Link="GameItemScheduler.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.EquipmentLevel.cs" Link="GameItemScheduler.EquipmentLevel.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.Auxiliary.cs" Link="GameItemScheduler.Auxiliary.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.Crafting.cs" Link="GameItemScheduler.Crafting.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.AbilityUnits.cs" Link="GameItemScheduler.AbilityUnits.cs" />
+    <Compile Include="..\..\Witcher3Modifier\GameItemScheduler.Gwent.cs" Link="GameItemScheduler.Gwent.cs" />
+  </ItemGroup>
+</Project>

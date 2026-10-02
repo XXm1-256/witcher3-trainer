@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+.build/
+dist/
+draft.json
+*.log.jsonl
+*.dmp
+*.zip
+/Research/*.png

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Witcher3Modifier/GameEquipmentNumbers.cs" Link="GameEquipmentNumbers.cs" />
+    <Compile Include="../../Witcher3Modifier/GameEquipment.cs" Link="GameEquipment.cs" />
+    <EmbeddedResource Include="../../Research/equipment_presets.json" LogicalName="Witcher3Modifier.EquipmentPresets.json" />
+  </ItemGroup>
+</Project>
