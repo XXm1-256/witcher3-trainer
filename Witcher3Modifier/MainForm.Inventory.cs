@@ -3,6 +3,11 @@
 public sealed partial class MainForm
 {
     private readonly TextBox inventorySearch = new() { Dock = DockStyle.Fill, PlaceholderText = "搜索当前背包中文名或内部名" };
+    private readonly ComboBox inventoryType = new() { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList, MaxDropDownItems = 12 };
+    private sealed record InventoryTypeFilter(string Key, string Label)
+    {
+        public override string ToString() => Label;
+    }
     private readonly ListBox inventoryList = new() { Dock = DockStyle.Fill, HorizontalScrollbar = true, SelectionMode = SelectionMode.MultiExtended };
     private readonly TextBox inventoryDetails = new() { Multiline = true, ReadOnly = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Vertical };
     private readonly CheckedListBox editAffixes = new() { CheckOnClick = true, Dock = DockStyle.Fill };
@@ -41,9 +46,17 @@ public sealed partial class MainForm
         left.Controls.Add(readInventory, 0, 1);
         left.Controls.Add(inventorySearch, 0, 2);
         left.RowStyles.Insert(3,new RowStyle(SizeType.Absolute,40));
-        left.Controls.Add(Labeled("需要等级",inventoryLevel),0,3);
-        left.Controls.Add(inventoryList, 0, 4);
-        left.Controls.Add(editPreview,0,5);
+        left.RowStyles.Insert(3,new RowStyle(SizeType.Absolute,40));
+        inventoryType.Items.AddRange(new object[] { new InventoryTypeFilter("", "全部类型"), new InventoryTypeFilter("$weapons", "全部武器"), new InventoryTypeFilter("$armor", "全部护甲") });
+        foreach (var category in availableItems.GroupBy(item => item.Category).OrderBy(group => group.First().CategoryName, StringComparer.CurrentCulture))
+            inventoryType.Items.Add(new InventoryTypeFilter(category.Key, category.First().CategoryName));
+        inventoryType.SelectedIndex = 0;
+        left.Controls.Add(Labeled("物品类型",inventoryType),0,3);
+        left.Controls.Add(Labeled("需要等级",inventoryLevel),0,4);
+        left.Controls.Add(inventoryList, 0, 5);
+        left.Controls.Add(editPreview,0,6);
+        usageTips.SetToolTip(inventoryType,"按类型筛选，可同时搜索名称和筛选等级。切换类型后，删除只作用于当前列表中选中的物品。");
+        inventoryType.SelectedIndexChanged += (_, _) => FilterInventory();
         usageTips.SetToolTip(inventoryLevel,"按背包装备的实际需要等级筛选。请返回游戏等待读取；换装或读档后可刷新背包。");
         inventoryLevel.SelectedIndexChanged += async (_,_) => {if(inventoryLevel.SelectedIndex>0) await ReadInventoryLevels();FilterInventory();};
         columns.Controls.Add(left, 0, 0);
@@ -142,6 +155,7 @@ public sealed partial class MainForm
         inventoryList.Items.Clear();
         foreach (var item in inventorySnapshot.Where(item => (query.Length == 0 ||
             item.DisplayName.Contains(query, StringComparison.OrdinalIgnoreCase) || item.Name.Contains(query, StringComparison.OrdinalIgnoreCase)) &&
+            InventoryTypeMatches((inventoryType.SelectedItem as InventoryTypeFilter)?.Key ?? "", item.Category) &&
             (inventoryLevel.SelectedIndex<=0 || item.IsEquipment && (inventoryLevel.SelectedIndex==1
                 ? !inventoryLevels.ContainsKey(item.UniqueId)
                 : inventoryLevels.TryGetValue(item.UniqueId,out var level) && level.Level==inventoryLevel.SelectedIndex-1))))
@@ -151,6 +165,14 @@ public sealed partial class MainForm
         inventoryList.EndUpdate();
         InventorySelectionChanged();
     }
+
+    private static bool InventoryTypeMatches(string filter, string category) => filter switch
+    {
+        "" => true,
+        "$weapons" => category is "steelsword" or "silversword" or "crossbow" or "secondary" or "work_secondary" or "monster_weapon" or "axe1h" or "axe2h" or "blunt1h" or "hammer2h" or "halberd2h" or "spear2h" or "staff2h" or "polearm" or "cleaver1h" or "bow",
+        "$armor" => category is "armor" or "boots" or "pants" or "gloves",
+        _ => filter == category
+    };
 
     private void InventorySelectionChanged()
     {
@@ -175,6 +197,7 @@ public sealed partial class MainForm
         inventoryBusy = busy;
         readInventory.Enabled = inventorySearch.Enabled = inventoryList.Enabled = !busy;
         inventoryLevel.Enabled=!busy;
+        inventoryType.Enabled=!busy;
         inspectEquipment.Enabled = !busy && inventoryList.SelectedItems.Count == 1 && (inventoryList.SelectedItem as InventoryItem)?.IsEquipment == true;
         deleteItem.Enabled = !busy && inventoryList.SelectedItem is InventoryItem;
         applyEquipment.Enabled = !busy && loadedEquipment is not null;

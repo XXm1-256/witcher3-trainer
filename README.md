@@ -2,7 +2,7 @@
 
 Adjust gold and XP, add items, customize equipment, and turn on combat or exploration helpers as needed.
 
-**[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.4/Witcher3Trainer-v0.1.2-en-win-x64.zip)** · **[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.4/Witcher3Trainer-v0.1.2-zh-CN-win-x64.zip)** · [All releases](https://github.com/XXm1-256/witcher3-trainer/releases)
+**[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.5/Witcher3Trainer-v0.1.5-en-win-x64.zip)** · **[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.5/Witcher3Trainer-v0.1.5-zh-CN-win-x64.zip)** · [All releases](https://github.com/XXm1-256/witcher3-trainer/releases)
 
 [简体中文介绍](README.zh-CN.md)
 
@@ -61,3 +61,7 @@ English item labels use the game's internal English names. Some may look differe
 To build the trainer, change a feature or learn how it works, start with the [developer tutorial](docs/DEVELOPMENT.md). For game updates, see [address migration](docs/ai/VERSION_MIGRATION.md). AI development tools have a separate [agent guide](docs/ai/AGENT_GUIDE.md).
 
 [Compatibility and verification](docs/ai/PROJECT_STATE.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE) · [Asset attribution](NOTICE.md)
+
+## New in 0.1.5
+
+Build a list of items, set each quantity and add the whole list in one action. Filter your inventory by item type alongside names and required levels. Appearance options now include seven hairstyles, fixed beard styles and clearly labeled stubble stages. See [release notes](CHANGELOG.md) for details.

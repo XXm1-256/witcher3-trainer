@@ -69,3 +69,7 @@ Source commit / artifact hashes / next unresolved step:
 ```
 
 Report addresses as RVAs with a fingerprint, not timeless absolute VAs. Reopen a failed route only with new evidence addressing its failure: corrected registration, valid decoded entry, compatible metadata or demonstrated lifecycle handling.
+
+## Appearance entries and name pools
+
+Current 5.00c appearance checks include reference RVAs 0x20FB310 (SetCustomHead), 0x20FB240 (RemoveCustomHead) and RememberCustomHead script parameters. Resolve registrations/metadata and original instructions again after updates. NameIds, head pointers, mounted unique IDs and hook-page addresses are per-run data and must be resolved fresh. Do not read primitive CName metadata with class/struct layouts. Resolve the empty CName from a byte-validated game default. For void calls use execution status and field readback, not the first return-buffer byte.

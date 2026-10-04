@@ -2,7 +2,7 @@
 
 调整金币和经验，添加物品、打造装备，也能按需开启战斗与探索辅助。
 
-**[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.4/Witcher3Trainer-v0.1.2-zh-CN-win-x64.zip)** · **[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.4/Witcher3Trainer-v0.1.2-en-win-x64.zip)** · [发布记录](https://github.com/XXm1-256/witcher3-trainer/releases)
+**[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.5/Witcher3Trainer-v0.1.5-zh-CN-win-x64.zip)** · **[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.5/Witcher3Trainer-v0.1.5-en-win-x64.zip)** · [发布记录](https://github.com/XXm1-256/witcher3-trainer/releases)
 
 [English introduction](README.md)
 
@@ -20,7 +20,7 @@
 
 - **调整成长速度**：直接设置金币，调整金币收入和经验倍率。
 - **减少战斗中的消耗**：无限生命、活力、呼吸和肾上腺素，无毒性，物品与弹药不减，一击必杀。
-- **整理物品与装备**：搜索并添加物品、选择数量、按等级查找装备，多选删除背包物品。
+- **整理物品与装备**：搜索物品并加入待添加清单，逐件设置数量后一次添加；按类型和等级整理背包，多选删除物品。
 - **打造想用的装备**：选择基础武器或护甲，添加词条和附魔，调整属性数值，修复耐久。
 - **方便赶路和探索**：地图标记传送、无落地伤害、猫眼夜视，以及移动、跳跃和游泳倍率。
 - **换一种玩法**：调整天气、时间、发型和胡须，立即赢下昆特牌对局，一键洗点。
@@ -40,7 +40,7 @@
 
 **添加的物品还没出现怎么办？**
 
-回到角色可以移动的画面，让这次添加完成，再添加下一件。暂停、剧情或读档时，部分操作会等待。
+回到角色可以移动的画面，清单会逐件处理并显示结果。暂停、剧情或读档时，部分操作会等待。
 
 **自动拾取在暂停时会怎样？**
 
@@ -59,3 +59,7 @@
 想自己编译、修改功能或了解实现方式，可以从[开发教程](docs/DEVELOPMENT.zh-CN.md)开始。维护游戏更新时，参考[地址迁移教程](docs/ai/VERSION_MIGRATION.zh-CN.md)；AI 开发工具另有[开发指南](docs/ai/AGENT_GUIDE.zh-CN.md)。
 
 [兼容性与验证说明](docs/ai/PROJECT_STATE.zh-CN.md) · [贡献指南](CONTRIBUTING.zh-CN.md) · [MIT 许可证](LICENSE) · [资源权利说明](NOTICE.zh-CN.md)
+
+## 0.1.5 新增内容
+
+物品可以先加入清单、逐件设置数量，再一次添加。背包新增物品类型筛选，可和名称、等级一起使用。外观选项补入第七种发型、固定胡须款式，并明确标出胡茬阶段。详情见[更新记录](CHANGELOG.zh-CN.md)。

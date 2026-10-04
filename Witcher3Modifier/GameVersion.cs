@@ -46,6 +46,8 @@ internal static class GameVersion
         [0x1CF67F0] = 0x1CF67F0,
         [0x20FB390] = 0x20FB390,
         [0x20FB490] = 0x20FB490,
+        [0x20FB310] = 0x20FB310,
+        [0x20FB240] = 0x20FB240,
         [0x26F5580] = 0x26F5580,
         [0x26FC970] = 0x26FC970,
         [0x26F934E] = 0x26F46CE,

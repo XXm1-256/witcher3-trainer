@@ -26,7 +26,9 @@ public sealed partial class MainForm
         var hour=new NumericUpDown {Minimum=0,Maximum=23,Value=12,Width=70};
         var minute=new NumericUpDown {Minimum=0,Maximum=59,Width=70};
         var hair=Choice(GameItemScheduler.FunHairStyles.Select(style=>style.Label).ToArray());
-        var beard=Choice("刮干净","短胡茬","短胡须","中等胡须","浓密胡须");
+        var beardStyle=Choice(GameItemScheduler.FunBeardStyles);
+        var beard=Choice("刮干净","短胡茬（阶段1）","较长胡茬（阶段2）","短胡须（阶段3）","长胡须（阶段4）");
+        beardStyle.SelectedIndexChanged+=(_,_)=>beard.Enabled=beardStyle.SelectedIndex==0;
         var slow=new NumericUpDown {Minimum=.1m,Maximum=1,Value=.5m,DecimalPlaces=2,Increment=.1m,Width=90};
         Add(0,0,"天气与时段",new FlowLayoutPanel {AutoSize=true,WrapContents=true,Controls={weather,
             Action("读取区域天气",()=> {var choices=GameItemScheduler.ReadFunWeather();Invoke(()=> {weather.Items.Clear();weather.Items.AddRange(choices);if(choices.Length>0) weather.SelectedIndex=0;});return $"已读取当前区域 {choices.Length} 种天气";}),
@@ -39,9 +41,11 @@ public sealed partial class MainForm
         Add(1,0,"发型与胡须",new FlowLayoutPanel {AutoSize=true,WrapContents=true,Controls={hair,
             Action("应用发型",()=> {GameItemScheduler.SetFunHair(UiValue(()=>hair.SelectedIndex));return "发型装配已回读确认，请查看杰洛特外观";}),
             Hint("选择发型，包含DLC理发样式。保存游戏可保留造型。")}},
+            new FlowLayoutPanel {AutoSize=true,WrapContents=true,Controls={beardStyle,
+            new Label {Text="造型",AutoSize=true},Hint("自然胡须可选择长度；山羊胡、鬓角胡和锚形胡使用固定造型。保存游戏可保留造型。")}},
             new FlowLayoutPanel {AutoSize=true,WrapContents=true,Controls={beard,
-            Action("应用胡须",()=>"胡须阶段已回读确认："+GameItemScheduler.SetFunBeard(UiValue(()=>beard.SelectedIndex))),
-            Hint("选择胡须长度，之后仍会正常生长。特殊剧情造型可能限制修改。")}});
+            Action("应用胡须",()=>GameItemScheduler.SetFunBeardStyle(UiValue(()=>beardStyle.SelectedIndex),UiValue(()=>beard.SelectedIndex))),
+            Hint("自然胡须提供刮净、两档胡茬、短胡须和长胡须。选好后点击应用，并返回可移动场景等待外观更新。")}});
         Add(0,1,"慢动作",new FlowLayoutPanel {AutoSize=true,WrapContents=true,Controls={new Label {Text="速度倍率",AutoSize=true},slow,
             Action("应用慢动作",()=>"慢动作请求已执行，当前总速度倍率："+GameItemScheduler.SetFunSlow(UiValue(()=>(float)slow.Value)).ToString("0.###")),
             Action("恢复正常速度",()=>"已撤销本项慢动作，当前总速度倍率："+GameItemScheduler.SetFunSlow(1).ToString("0.###")),

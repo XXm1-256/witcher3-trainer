@@ -10,6 +10,7 @@ internal static partial class GameItemScheduler
     internal static bool IsAutoLootWait(Exception error) => error is TimeoutException ||
         error is InvalidOperationException && error.Message is
             "未找到运行中的游戏。" or
+            "游戏场景正在切换，请稍后重试。" or
             "未能确认游戏场景对象结构，本次操作未执行；请先载入存档。" or
             "未能确认玩家对象结构，本次操作未执行；请先载入存档。" or
             "未能确认背包对象结构，本次操作未执行；请先载入存档。" or

@@ -20,6 +20,57 @@ internal static class Program
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
         T Field<T>(string name) => (T)typeof(MainForm).GetField(name, flags)!.GetValue(form)!;
         void Guard(string name) => typeof(MainForm).GetField(name, flags)!.SetValue(form, true);
+        if(Environment.GetCommandLineArgs().Contains("--item-batch"))
+        {
+            var catalog=Field<ListBox>("itemCatalog");
+            var pending=Field<ListBox>("pendingItems");
+            var quantity=Field<NumericUpDown>("itemQuantity");
+            var edit=Field<NumericUpDown>("pendingItemQuantity");
+            void Queue()=>typeof(MainForm).GetMethod("QueueSelectedItem",flags)!.Invoke(form,null);
+            void Pump(Task task)
+            {
+                var deadline=DateTime.UtcNow.AddSeconds(10);
+                while(!task.IsCompleted && DateTime.UtcNow<deadline) { Application.DoEvents();Thread.Sleep(5); }
+                if(!task.IsCompleted) throw new Exception("Offline batch did not complete");
+                task.GetAwaiter().GetResult();
+            }
+            Task Submit(Func<string,int,Action,(int Added,int ReturnedIds)> give)=>
+                (Task)typeof(MainForm).GetMethod("AddItemBatch",flags)!.Invoke(form,[give])!;
+            catalog.SelectedIndex=0;quantity.Value=2;Queue();Queue();
+            if(pending.Items.Count!=1 || !pending.Items[0]!.ToString()!.Contains("×4")) throw new Exception("Repeated selection did not merge");
+            Field<TextBox>("itemSearch").Text="Linen";
+            if(pending.Items.Count!=1) throw new Exception("Search erased the batch");
+            catalog.SelectedIndex=0;quantity.Value=3;Queue();
+            if(pending.Items.Count!=2) throw new Exception("Second item was not queued");
+            edit.Value=5;
+            if(!pending.Items[1]!.ToString()!.Contains("×5")) throw new Exception("Per-item quantity edit failed");
+            int calls=0;
+            Pump(Submit((item,count,wait)=> { if(++calls==2) throw new InvalidOperationException("Offline injected failure");return(count,1); }));
+            if(calls!=2 || !pending.Items[0]!.ToString()!.Contains("已添加 4") || !pending.Items[1]!.ToString()!.Contains("结果未确认"))
+                throw new Exception("Partial result was not preserved");
+            Pump(Submit((item,count,wait)=> { calls++;return(count,1); }));
+            if(calls!=2) throw new Exception("Confirmed or uncertain item was submitted twice");
+            pending.Items.Clear();typeof(MainForm).GetMethod("RefreshPendingQuantity",flags)!.Invoke(form,null);
+            Field<TextBox>("itemSearch").Clear();
+            catalog.SelectedIndex=0;quantity.Value=1;Queue();catalog.SelectedIndex=1;Queue();
+            calls=0;
+            Pump(Submit((item,count,wait)=>
+            {
+                calls++;
+                typeof(MainForm).GetField("stopItemBatchRequested",flags)!.SetValue(form,true);
+                return(count,1);
+            }));
+            if(calls!=1 || !pending.Items[1]!.ToString()!.Contains("待添加")) throw new Exception("Stop did not preserve unsent items");
+            Pump(Submit((item,count,wait)=> {calls++;return(count,1); }));
+            if(calls!=2 || Field<Button>("giveItem").Enabled) throw new Exception("Continue repeated completed items");
+            form.Size=new Size(1715,1131);form.CreateControl();form.PerformLayout();
+            var batchTabs=form.Controls.OfType<TrainerTabs>().Single();batchTabs.SelectedIndex=1;batchTabs.CreateControl();batchTabs.PerformLayout();
+            var page=batchTabs.TabPages[1];Size size=page.Size;page.Parent=null;page.Dock=DockStyle.None;page.Size=size;page.CreateControl();page.PerformLayout();
+            using var bitmap=new Bitmap(page.Width,page.Height);page.DrawToBitmap(bitmap,new Rectangle(Point.Empty,bitmap.Size));
+            bitmap.Save(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory,"../../../../../Research/item-batch-offline.png")));
+            Console.WriteLine("Batch merge/search retention/per-item quantity/partial failure/no duplicate/stop and continue passed; hidden render, no game access");
+            return;
+        }
         if(Environment.GetCommandLineArgs().Contains("--help-copy"))
         {
             var helpTips=Field<ToolTip>("usageTips");
@@ -398,6 +449,31 @@ internal static class Program
             Field<ComboBox>("inventoryLevel").SelectedIndex=13;
             if(inventory.Items.Count!=1) throw new Exception("Backpack level switch failed");
             Field<ComboBox>("inventoryLevel").SelectedIndex=0;
+            var typeFilter=Field<ComboBox>("inventoryType");
+            int TypeIndex(string label)=>Enumerable.Range(0,typeFilter.Items.Count).Single(i=>typeFilter.Items[i]!.ToString()==label);
+            object armorTemplate=Activator.CreateInstance(templateType)!;templateType.GetProperty("Category")!.SetValue(armorTemplate,"armor");
+            object materialTemplate=Activator.CreateInstance(templateType)!;templateType.GetProperty("Category")!.SetValue(materialTemplate,"crafting_ingredient");
+            snapshot.Add(Activator.CreateInstance(itemType,[0,0L,903,0,2,"offline-armor",armorTemplate])!);
+            snapshot.Add(Activator.CreateInstance(itemType,[0,0L,904,0,8,"offline-material",materialTemplate])!);
+            Field<TextBox>("inventorySearch").Text="";
+            typeFilter.SelectedIndex=TypeIndex("全部武器");
+            if(inventory.Items.Count!=2) throw new Exception("Aggregate weapon filter failed");
+            inventory.SetSelected(0,true);inventory.SetSelected(1,true);
+            typeFilter.SelectedIndex=TypeIndex("制作材料");
+            if(inventory.Items.Count!=1 || inventory.SelectedItems.Count!=0 || Field<Button>("deleteItem").Enabled) throw new Exception("Hidden weapon selection leaked into filtered deletion");
+            typeFilter.SelectedIndex=TypeIndex("全部护甲");
+            if(inventory.Items.Count!=1 || itemType.GetProperty("UniqueId")!.GetValue(inventory.Items[0]) as int?!=903) throw new Exception("Armor type filter failed");
+            typeFilter.SelectedIndex=TypeIndex("钢剑");
+            Field<TextBox>("inventorySearch").Text="offline-first";
+            Field<ComboBox>("inventoryLevel").SelectedIndex=12;
+            if(inventory.Items.Count!=1) throw new Exception("Type/name/level intersection failed");
+            typeFilter.SelectedIndex=TypeIndex("胸甲");
+            if(inventory.Items.Count!=0) throw new Exception("Type filter ignored active name and level");
+            Field<ComboBox>("inventoryLevel").SelectedIndex=0;
+            typeFilter.SelectedIndex=0;
+            typeof(MainForm).GetMethod("SetInventoryBusy",flags)!.Invoke(form,[true]);
+            if(typeFilter.Enabled) throw new Exception("Type filter remained editable during inventory operation");
+            typeof(MainForm).GetMethod("SetInventoryBusy",flags)!.Invoke(form,[false]);
             cache.Clear();
             snapshot.Clear(); Field<TextBox>("inventorySearch").Text="";
             Console.WriteLine("Inventory multi-select, visible selection preservation, quantity bounds and single equipment guard passed; no game calls");

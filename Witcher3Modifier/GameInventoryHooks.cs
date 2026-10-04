@@ -5,6 +5,10 @@ namespace Witcher3Modifier;
 
 internal static class GameInventoryHooks
 {
+    [DllImport("kernel32.dll")]
+    private static extern uint GetProcessId(nint process);
+    private static readonly string[] BodyNames=GameItem.LoadCatalog().Where(item=>item.Category is "head" or "hair").Select(item=>item.Name).ToArray();
+    private static (int Process,long Pool,int[] Ids)? bodyNamesCache;
     private static long AddRva => GameVersion.Rva(0x1F9D8F0);
     private static long RemoveRva => GameVersion.Rva(0x1F96070);
     private const int AddCodeOffset = 0x1100;
@@ -19,8 +23,10 @@ internal static class GameInventoryHooks
         "5052415249BA8877665544332211493B0A753441813871C80000752B418B0185C07E24490FAF42084883C00541BA0A00000031D249F7F2483D008793037605B800879303418901415A5A584C8944241848894C2408555657415448B81122334455667788FFE0");
     private static readonly byte[] LegacyRemoveTemplate = Convert.FromHexString(
         "504152415349BA8877665544332211493B0A754941807A100175424C8B99400100004D85DB74368B814801000085C07E2C3D10270000772541395360740D4981C398000000FFC875EFEB1241817B5871C800007408415B415A58B001C3415B415A5848895C2408555657415641574883EC3048B80011223344556677FFE0");
-    private static readonly byte[] RemoveTemplate = Convert.FromHexString(
+    private static readonly byte[] BoltRemoveTemplate = Convert.FromHexString(
         "504152415349BA8877665544332211493B0A755941807A100175524C8B99400100004D85DB74468B814801000085C07E3C3D10270000773541395360740D4981C398000000FFC875EFEB2241817B5871C800007418418B4358413B4230740E413B42347408415B415A58B001C3415B415A5848895C2408555657415641574883EC3048B80011223344556677FFE0");
+
+    private static readonly byte[] RemoveTemplate = Convert.FromHexString("504152415349BA887766554433221149390A0F858000000041807A100175794C8B99400100004D85DB746D8B814801000085C07E633D10270000775C41395360740D4981C398000000FFC875EFEB4941817B5871C80000743F418B4358413B42307435413B4234742F5289C2418B82000A00003D80000000771585C07411FFC8413B9482040A00007402EBEE5AEB095A415B415A58B001C3415B415A5848895C2408555657415641574883EC3048B80011223344556677FFE0");
 
     internal static (decimal Gold, bool KeepItems) Read() =>
         GameMoney.WithInventory(false, (handle, _, inventory, module) =>
@@ -106,7 +112,9 @@ internal static class GameInventoryHooks
             (!GameMoney.ReadBytes(handle, page + RemoveCodeOffset, RemoveTemplate.Length)
                 .SequenceEqual(BuildCode(RemoveTemplate, page, module + RemoveRva + RemoveOriginal.Length, RemoveReturnMarker)) &&
              !GameMoney.ReadBytes(handle, page + RemoveCodeOffset, LegacyRemoveTemplate.Length)
-                .SequenceEqual(BuildCode(LegacyRemoveTemplate, page, module + RemoveRva + RemoveOriginal.Length, RemoveReturnMarker))))
+                .SequenceEqual(BuildCode(LegacyRemoveTemplate, page, module + RemoveRva + RemoveOriginal.Length, RemoveReturnMarker)) &&
+             !GameMoney.ReadBytes(handle, page + RemoveCodeOffset, BoltRemoveTemplate.Length)
+                .SequenceEqual(BuildCode(BoltRemoveTemplate, page, module + RemoveRva + RemoveOriginal.Length, RemoveReturnMarker))))
             throw new InvalidOperationException("游戏库存拦截代码校验失败。");
         return page;
     }
@@ -116,26 +124,44 @@ internal static class GameInventoryHooks
         int bodkin = GameItemScheduler.ResolveName(handle, module, "Bodkin Bolt");
         int harpoon = GameItemScheduler.ResolveName(handle, module, "Harpoon Bolt");
         byte[] ids = [..BitConverter.GetBytes(bodkin), ..BitConverter.GetBytes(harpoon)];
+        int process=(int)GetProcessId(handle);
+        long pool=GameMoney.ReadInt64(handle,module+GameVersion.Rva(0x5874E38));
+        int[] bodyIds;
+        if(bodyNamesCache is {} cache && cache.Process==process && cache.Pool==pool) bodyIds=cache.Ids;
+        else
+        {
+            bodyIds=BodyNames.Select(name=>GameItemScheduler.ResolveName(handle,module,name)).Distinct().Order().ToArray();
+            bodyNamesCache=(process,pool,bodyIds);
+        }
+        if(bodyIds.Length is <1 or >128) throw new InvalidOperationException("角色外观物品列表未通过检查。");
+        byte[] body=new byte[4+bodyIds.Length*4];
+        BitConverter.GetBytes(bodyIds.Length).CopyTo(body,0);
+        for(int i=0;i<bodyIds.Length;i++) BitConverter.GetBytes(bodyIds[i]).CopyTo(body,4+i*4);
         byte[] code = BuildCode(RemoveTemplate, page, module + RemoveRva + RemoveOriginal.Length, RemoveReturnMarker);
         if (GameMoney.ReadBytes(handle, page + 0x30, 8).SequenceEqual(ids) &&
+            GameMoney.ReadBytes(handle,page+0xA00,body.Length).SequenceEqual(body) &&
             GameMoney.ReadBytes(handle, page + RemoveCodeOffset, code.Length).SequenceEqual(code)) return;
         GameProcessPause.Run(handle, () =>
         {
             if (FindPage(handle, module) != page) throw new InvalidOperationException("库存入口在更新前已变化。");
             byte[] previous = GameMoney.ReadBytes(handle, page + RemoveCodeOffset, code.Length);
             byte[] previousIds = GameMoney.ReadBytes(handle, page + 0x30, 8);
+            byte[] previousBody=GameMoney.ReadBytes(handle,page+0xA00,body.Length);
             try
             {
                 Write(handle, page + 0x30, ids);
+                Write(handle,page+0xA00,body);
                 PatchEntry(handle, page + RemoveCodeOffset, code);
-                if (FindPage(handle, module) != page || !GameMoney.ReadBytes(handle, page + 0x30, 8).SequenceEqual(ids))
+                if (FindPage(handle, module) != page || !GameMoney.ReadBytes(handle, page + 0x30, 8).SequenceEqual(ids) ||
+                    !GameMoney.ReadBytes(handle,page+0xA00,body.Length).SequenceEqual(body))
                     throw new InvalidOperationException("默认弩箭清理更新回读失败。");
-                ErrorLog.Write("默认弩箭清理更新",null,new {Bodkin= bodkin,Harpoon= harpoon,CodeBytes=code.Length});
+                ErrorLog.Write("库存内部物品清理更新",null,new {Bodkin= bodkin,Harpoon= harpoon,BodyItems=bodyIds.Length,CodeBytes=code.Length});
             }
             catch
             {
                 PatchEntry(handle, page + RemoveCodeOffset, previous);
                 Write(handle, page + 0x30, previousIds);
+                Write(handle,page+0xA00,previousBody);
                 throw;
             }
         }, (module + RemoveRva, RemoveOriginal.Length), (page + RemoveCodeOffset, code.Length));

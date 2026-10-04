@@ -6,8 +6,10 @@ internal static partial class GameItemScheduler
     [
         ("束发马尾","Half With Tail Hairstyle"), ("剃鬓马尾","Shaved With Tail Hairstyle"),
         ("长发披肩","Long Loose Hairstyle"), ("短发披肩（DLC）","Short Loose Hairstyle"),
-        ("莫霍克马尾（DLC）","Mohawk With Ponytail Hairstyle"), ("尼弗迦德式（DLC）","Nilfgaardian Hairstyle")
+        ("莫霍克马尾（DLC）","Mohawk With Ponytail Hairstyle"), ("尼弗迦德式（DLC）","Nilfgaardian Hairstyle"),
+        ("叛逆者发型","Rabble rouser Hair")
     ];
+    internal static readonly string[] FunBeardStyles=["自然胡须","山羊胡","鬓角胡","锚形胡"];
     private static readonly Dictionary<long,string> FunPrefixes = new()
     {
         [0x1F85150]="48895C2408565741564883EC308B05C564C7034C8D351669",
@@ -24,7 +26,9 @@ internal static partial class GameItemScheduler
         [0x1CF6AA0]="40534883EC20488B42304C8D0DCF4FD703C5FA1005876EDB",
         [0x1CF67F0]="48895C2408574883EC30488B4230488D3D7B52D703C5F829",
         [0x20FB390]="48895C24084889742418574883EC30488B4230488D35D606",
-        [0x20FB490]="4883EC2848FF42304C8BC9488B058E649503C78158010000"
+        [0x20FB490]="4883EC2848FF42304C8BC9488B058E649503C78158010000",
+        [0x20FB310]="48895C2418574883EC204C8B4230488BDA8B05E138B70348",
+        [0x20FB240]="4883EC2848FF4230C681C001000000E8CC10000083780800"
     };
 
     private static bool FunClass(nint handle,long module,long obj,string name)
@@ -84,6 +88,29 @@ internal static partial class GameItemScheduler
         if(GameMoney.ReadBytes(handle,instruction+8+displacement,16).Any(value=>value!=0))
             throw new InvalidOperationException("猫眼的默认位置常量不是零向量。");
         return new {Time=ReadFunTime(),Head=$"0x{target.Head:X}",Beard=GameMoney.ReadInt32(handle,target.Head+0x158),Hair=hair,Prefixes=FunPrefixes.Count,ZeroCatPosition=true};
+    });
+
+    internal static object ReadFunHeadState() => GameMoney.WithInventory(false,(handle,game,_,module)=>
+    {
+        var target=FunTarget(handle,game,module,true);
+        var tables=Enumerable.Range(0,8).Select(i=>
+        {
+            long address=target.Head+0x15C+i*12;
+            int count=GameMoney.ReadInt32(handle,address+8);
+            if(count is <0 or >16) throw new InvalidOperationException("胡须造型列表异常。");
+            long data=GameMoney.ReadInt64(handle,address);
+            int[] ids=count==0?[]:Enumerable.Range(0,count).Select(j=>GameMoney.ReadInt32(handle,data+j*4)).ToArray();
+            return new {Offset=$"0x{0x15C+i*12:X}",Names=GameInventory.ReadNames(handle,module,ids)};
+        }).ToArray();
+        var saved=RespecProperty(handle,module,target.Player,"rememberedCustomHead");
+        var body=GameItem.LoadCatalog().Where(item=>item.Category is "head" or "hair").Select(item=>ResolveName(handle,module,item.Name)).ToArray();
+        FunCheck(handle,module,0x20FB310);FunCheck(handle,module,0x20FB240);
+        var remember=ActorScriptTarget("RememberCustomHead",1,owner:"CR4Player");
+        return new {Head=$"0x{target.Head:X}",Stage=GameMoney.ReadInt32(handle,target.Head+0x158),
+            SavedAddress=$"0x{saved.Address:X}",BodyCount=body.Length,RememberFunction=$"0x{remember.Function:X}",
+            Hair=FunHairStyles.Select(style=>new {style.Label,NameId=ResolveItem(handle,game,module,style.Item)}).ToArray(),
+            Flags=Convert.ToHexString(GameMoney.ReadBytes(handle,target.Head+0x150,3)),
+            MountedId=GameMoney.ReadInt32(handle,target.Head+0x1BC),Custom=GameMoney.ReadBytes(handle,target.Head+0x1C0,1)[0],Tables=tables};
     });
 
     internal static int FunTimeTarget(int current,int hour,int minute)
@@ -206,6 +233,7 @@ internal static partial class GameItemScheduler
     {
         if(stage is <0 or >4) throw new ArgumentOutOfRangeException(nameof(stage));
         long head=GameMoney.WithInventory(false,(handle,game,_,module)=>FunTarget(handle,game,module,true).Head);
+        GameInventoryHooks.Rebind();
         FunNative(stage==0?0x20FB490:0x20FB390,stage==0?[0x20]:[9,0,4,..BitConverter.GetBytes(stage),0x20],head);
         int actual=GameMoney.WithInventory(false,(handle,game,_,module)=>
         {
@@ -213,7 +241,75 @@ internal static partial class GameItemScheduler
             return GameMoney.ReadInt32(handle,head+0x158);
         });
         if(actual!=stage) throw new InvalidOperationException("胡须请求已执行，但所选阶段未回读确认；当前造型可能不支持该阶段。");
+        VerifyFunHead(head,ReadNaturalHeadName(stage));
         return actual;
+    });
+
+    internal static string FunHeadName(int style,bool scar,bool mark,bool tattoo)
+    {
+        if(style is <0 or >7) throw new ArgumentOutOfRangeException(nameof(style));
+        return $"head_{style}"+(scar?"_scar":"")+(mark?"_mark":"")+(tattoo?"_tattoo":"");
+    }
+
+    private static string ReadNaturalHeadName(int stage) => GameMoney.WithInventory(false,(handle,game,_,module)=>
+    {
+        long head=FunTarget(handle,game,module,true).Head;
+        byte[] flags=GameMoney.ReadBytes(handle,head+0x150,3);
+        return FunHeadName(stage,flags[2]!=0,flags[1]!=0,flags[0]!=0);
+    });
+
+    private static void VerifyFunHead(long head,string name)
+    {
+        int mounted=GameMoney.WithInventory(false,(handle,game,_,module)=>
+        {
+            if(FunTarget(handle,game,module,true).Head!=head) throw new InvalidOperationException("角色已变化，请检查胡须状态。");
+            return GameMoney.ReadInt32(handle,head+0x1BC);
+        });
+        var item=GameInventory.Read().SingleOrDefault(item=>item.UniqueId==mounted);
+        if(item?.Name!=name || !IsItemMounted(mounted))
+            throw new InvalidOperationException("胡须头部装配未确认。请返回游戏后重新应用所选胡须；请勿连续重复点击。");
+    }
+
+    internal static string SetFunBeardStyle(int style,int stage) => RunSerialized(()=>
+    {
+        if(style<0 || style>=FunBeardStyles.Length || stage is <0 or >4) throw new ArgumentOutOfRangeException(nameof(style));
+        var state=GameMoney.WithInventory(false,(handle,game,_,module)=>
+        {
+            var target=FunTarget(handle,game,module,true);
+            FunCheck(handle,module,0x20FB310);FunCheck(handle,module,0x20FB240);
+            byte[] flags=GameMoney.ReadBytes(handle,target.Head+0x150,3);
+            string name=FunHeadName(style==0?stage:style+4,flags[2]!=0,flags[1]!=0,flags[0]!=0);
+            return (target.Head,target.Player,Name:name,NameId:ResolveItem(handle,game,module,name));
+        });
+        var remember=ActorScriptTarget("RememberCustomHead",1,owner:"CR4Player");
+        GameInventoryHooks.Rebind();
+        if(style==0)
+        {
+            SetFunBeard(stage);
+            FunNative(0x20FB240,[0x20],state.Head);
+        }
+        else FunNative(0x20FB310,[4,..BitConverter.GetBytes(state.NameId),0x20],state.Head);
+        VerifyFunHead(state.Head,state.Name);
+        int remembered=GameMoney.WithInventory(false,(handle,game,_,module)=>
+        {
+            var target=FunTarget(handle,game,module,true);
+            if(target.Head!=state.Head || target.Player!=state.Player) throw new InvalidOperationException("角色已变化，请检查胡须状态。");
+            // CName's empty value is the same default read by SetCustomHead's native wrapper.
+            long instruction=module+GameVersion.Rva(0x20FB310)+0x11;
+            int empty=GameMoney.ReadInt32(handle,instruction+6+GameMoney.ReadInt32(handle,instruction+2));
+            return style==0?empty:state.NameId;
+        });
+        if(remember.Player!=state.Player) throw new InvalidOperationException("角色已变化，请检查胡须状态。");
+        InvokeActorScript(remember.Game,remember.Player,remember.Function,remember.Entry,remember.Player,remember.Reference,BitConverter.GetBytes(remembered));
+        GameMoney.WithInventory(false,(handle,game,_,module)=>
+        {
+            var target=FunTarget(handle,game,module,true);
+            if(target.Player!=state.Player || GameMoney.ReadInt32(handle,RespecProperty(handle,module,target.Player,"rememberedCustomHead").Address)!=remembered)
+                throw new InvalidOperationException("胡须造型保存数据未确认。");
+            return true;
+        });
+        ErrorLog.Write("胡须造型装配确认",null,new {Style=FunBeardStyles[style],stage,state.Name});
+        return "胡须已应用："+FunBeardStyles[style]+(style==0?"（"+stage+"级长度）":"");
     });
 
     private static byte[] FunNative(long rva,byte[] arguments,long? context=null)

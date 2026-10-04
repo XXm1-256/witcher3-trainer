@@ -5,7 +5,7 @@
 1. Extract the language package into a writable folder. Load a game save, then run `Witcher3Modifier.exe`.
 2. Use the Common functions page for gold, multipliers and switches. Hover the round **i** for short instructions.
 3. **Save switches and multipliers** remembers selected settings. **Hotkeys** controls all shortcuts. Input boxes should continue accepting normal typing.
-4. After adding an item, return to a scene where Geralt can move and wait for the item to appear before adding another. Menus, cutscenes and loading can delay some actions. No toxicity may be unavailable during story scenes.
+4. After submitting an item list, return to a scene where Geralt can move so the list can process. Menus, cutscenes and loading can delay some actions. No toxicity may be unavailable during story scenes.
 
 ## Shortcuts
 
@@ -35,3 +35,13 @@ Place a marker in the current region and return to gameplay. Some destinations l
 Turn on nearby looting and gathering to collect container items and herbs within 5 meters. Locked, quest, special-interaction and theft-sensitive containers are skipped. It waits during pauses/loading and resumes during gameplay. If it stops with an error, check the message and the log; some story containers cannot be collected this way.
 
 If something goes wrong, include the message and the relevant lines from `modifier.log.jsonl` beside the executable when reporting it. Keep a separate save before deleting items or changing equipment.
+
+## Item lists and inventory types
+
+Select an item, set its quantity and click **Add to list**. Continue searching to add other items. Select an entry on the right to change its quantity or remove it. **Add all pending items** processes the list one entry at a time when gameplay resumes. Completed entries are not repeated. Check your game inventory before re-adding an entry with an unconfirmed result. **Stop after current item** keeps the remaining items pending.
+
+In Inventory and equipment, **Item type** includes all weapons, all armor and individual categories. Combine it with name and level filters. Changing type clears selections that become hidden; deletion only affects selected entries in the current list.
+
+## Hair and beards
+
+The Fun lab offers seven hairstyles. Natural beard lengths include clean-shaven, light stubble, heavy stubble, short beard and long beard. Goatee, mutton chops and anchor beard are fixed styles. Apply your selection and return to gameplay to update the appearance. Save the game to retain it. If the face model disappears, stop changing styles and report the selected style and relevant log lines.

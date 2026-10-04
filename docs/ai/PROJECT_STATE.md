@@ -17,7 +17,7 @@ Offline regression separates known waits from genuine validation failures. Gamep
 | Area | Evidence | Remaining scope |
 |---|---|---|
 | Chinese / English source | Release builds, offline probes | All runtime functions are not exhaustively automated |
-| English UI | 560 initial controls/list/tooltip checks, five-page offline rendering | Dynamic errors and every DPI/size combination are not fully covered |
+| English UI | 578 initial controls/list/tooltip checks, five-page offline rendering | Dynamic errors and every DPI/size combination are not fully covered |
 | Equipment persistence | Save/reload observations for tested equipment | Native attribute floors and derived levels remain; arbitrary independent levels unsupported |
 | Loot query | General-entity query bytecode invariants; observed containers/herb | New recovery, all scripted container types and complex scenes |
 | Teleport | Prior successful navigation landings | All distant/multi-level terrain destinations; air arrival possible |
@@ -29,3 +29,11 @@ Offline regression separates known waits from genuine validation failures. Gamep
 - A nearby FactsAdd candidate was inside a function and crashed. Resolve the registered entry and decode instructions before calling.
 - Treating all auto-loot errors as fatal persisted an unwanted OFF state. Keep known readiness handling narrow and never bypass true validation.
 - English item identifiers are practical names, not a claim of a complete official English localization extraction.
+
+## 0.1.5 maintenance notes
+
+MainForm.ItemBatch.cs reuses Give serially. Preserve each result and unconfirmed state; do not share a request slot concurrently or replay uncertain results. Inventory filters use Category keys; hidden selections must not be deleted.
+
+The inventory hook exempts 87 head/hair NameIds from keep-items removal blocking. Its configuration uses +0xA00/+0xA04, capped at 128 entries. Rebind for each process/name pool; NameIds are not portable across processes. Only initial WithInventory object-traversal read failures count as scene waits; operation-internal read/type/code failures remain errors. Beard changes use the existing RememberCustomHead script. Mounted-item readback is not proof of face rendering or save persistence.
+
+The English initial UI passed 578 control checks. Offline tests cover batch partial failure/stop/no replay and category/name/level intersections with hidden-selection protection. Actual item batches, face recovery and the latest load recovery await player observation.

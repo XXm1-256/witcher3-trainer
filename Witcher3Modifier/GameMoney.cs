@@ -74,14 +74,22 @@ internal static class GameMoney
         if (handle == 0) throw new InvalidOperationException("无法连接游戏进程。");
         try
         {
-            long gameObject = ReadInt64(handle, baseAddress + GamePointerRva);
-            CheckVtable(handle, gameObject, baseAddress + GameVtableRva, "游戏场景");
-            long playerHandle = ReadInt64(handle, gameObject + 0xFD60);
-            long player = ReadInt64(handle, playerHandle + 8);
-            CheckVtable(handle, player, baseAddress + PlayerVtableRva, "玩家");
-            long inventoryHandle = ReadInt64(handle, player + 0x1B0);
-            long inventory = ReadInt64(handle, inventoryHandle + 8);
-            CheckVtable(handle, inventory, baseAddress + InventoryVtableRva, "背包");
+            long gameObject,player,inventory;
+            try
+            {
+                gameObject = ReadInt64(handle, baseAddress + GamePointerRva);
+                CheckVtable(handle, gameObject, baseAddress + GameVtableRva, "游戏场景");
+                long playerHandle = ReadInt64(handle, gameObject + 0xFD60);
+                player = ReadInt64(handle, playerHandle + 8);
+                CheckVtable(handle, player, baseAddress + PlayerVtableRva, "玩家");
+                long inventoryHandle = ReadInt64(handle, player + 0x1B0);
+                inventory = ReadInt64(handle, inventoryHandle + 8);
+                CheckVtable(handle, inventory, baseAddress + InventoryVtableRva, "背包");
+            }
+            catch(InvalidOperationException ex) when(ex.Message=="读取游戏数据失败。")
+            {
+                throw new InvalidOperationException("游戏场景正在切换，请稍后重试。",ex);
+            }
 
             return action(handle, gameObject, inventory, baseAddress);
         }

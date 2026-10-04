@@ -16,7 +16,7 @@ public sealed partial class MainForm : Form
     private readonly Label selectedItem = new() { Text = "尚未选择物品", AutoSize = true };
     private readonly NumericUpDown itemQuantity = new() { Minimum = 1, Maximum = 9999, Value = 1, Dock = DockStyle.Fill };
     private readonly Label itemAddNotice = new() { Text = "添加后请返回游戏并关闭暂停菜单；上一笔完成后可继续添加。", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
-    private readonly Button giveItem = new MetalButton() { Text = "获得选中物品", Dock = DockStyle.Fill };
+    private readonly Button giveItem = new MetalButton() { Text = "添加清单全部物品", AutoSize = true };
     private readonly ComboBox gearType = new() { DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill };
     private readonly ComboBox gearBase = new() { DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill, DropDownWidth = 650 };
     private readonly TextBox gearSearch = new() { PlaceholderText = "搜索中文名称或内部名称", Dock = DockStyle.Fill };
@@ -207,27 +207,8 @@ public sealed partial class MainForm : Form
         left.Controls.Add(itemCatalog, 0, 4);
         columns.Controls.Add(left, 0, 0);
 
-        var right = Grid(1);
-        right.RowStyles.Add(new RowStyle(SizeType.Absolute, 70));
-        right.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        right.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        right.RowStyles.Add(new RowStyle(SizeType.Absolute, 80));
-        right.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        right.Controls.Add(Info("添加设置", "选中物品后，直接发送到当前游戏背包。"), 0, 0);
-        right.Controls.Add(selectedItem, 0, 1);
-        right.Controls.Add(Labeled("添加数量", itemQuantity), 0, 2);
-        giveItem.Click += async (_, _) => await AddItem();
-        usageTips.SetToolTip(giveItem, "按所填数量添加选中物品。请返回游戏，上一笔添加完成后再添加下一件。");
+        var right = BuildItemBatchPanel();
         usageTips.SetToolTip(fuzzySearch, "允许名称中间漏字；三个字以上的中文名称允许错一个字。准确匹配优先显示。");
-        giveItem.Dock = DockStyle.None;
-        giveItem.Size = new Size(220, 32);
-        giveItem.Anchor = AnchorStyles.Left | AnchorStyles.Top;
-        var addRow = Grid(2);
-        addRow.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 230));
-        addRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        addRow.Controls.Add(giveItem, 0, 0);
-        addRow.Controls.Add(itemAddNotice, 1, 0);
-        right.Controls.Add(addRow, 0, 3);
         columns.Controls.Add(right, 1, 0);
         page.Controls.Add(columns);
 
@@ -724,41 +705,6 @@ public sealed partial class MainForm : Form
             itemCatalog.SelectedIndex = i;
             break;
         }
-    }
-
-    private async Task AddItem()
-    {
-        if (itemCatalog.SelectedItem is not GameItem item)
-        {
-            MessageBox.Show(this, "请先选择一个物品。", "添加物品");
-            return;
-        }
-        int quantity = (int)itemQuantity.Value;
-        giveItem.Enabled = false;
-        itemAddNotice.Text = $"正在添加 {item.DisplayName} ×{quantity}；请返回游戏并关闭暂停菜单，完成后可继续添加。";
-        status.Text = $"正在添加 {item.DisplayName} ×{quantity}…";
-        try
-        {
-            var result = await Task.Run(() => GameItemScheduler.Give(item.Name, quantity, () =>
-            {
-                if (!IsDisposed && IsHandleCreated) BeginInvoke(new Action(() =>
-                {
-                    itemAddNotice.Text = $"{item.DisplayName} ×{quantity} 等待游戏继续运行；请返回游戏并关闭暂停菜单。上一笔完成后可继续添加。";
-                    status.Text = $"{item.DisplayName} ×{quantity} 已排队，等待游戏继续运行；请勿重复添加";
-                }));
-            }));
-            itemAddNotice.Text = $"{item.DisplayName} 已添加，背包数量增加 {result.Added}；可以继续添加。";
-            status.Text = $"{item.DisplayName} 已添加；背包数量增加 {result.Added}";
-            PlaySuccess();
-        }
-        catch (Exception ex)
-        {
-            LogFailure("添加物品", ex, new { item.Name, item.DisplayName, Quantity = quantity });
-            MessageBox.Show(this, ex.Message, "添加物品未完成");
-            itemAddNotice.Text = $"{item.DisplayName} 添加未确认，请查看错误提示。";
-            status.Text = $"添加物品未确认：{ex.Message}";
-        }
-        finally { giveItem.Enabled = true; }
     }
 
     private async Task TeleportToMapPin()

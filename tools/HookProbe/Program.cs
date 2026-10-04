@@ -5,6 +5,7 @@ try
     if(args.Length==1 && args[0]=="autoloot-recovery-offline")
     {
         Exception[] waiting=[new TimeoutException("装备查询正在等待游戏运行。"),
+            new InvalidOperationException("游戏场景正在切换，请稍后重试。"),
             new InvalidOperationException("未能确认玩家对象结构，本次操作未执行；请先载入存档。"),
             new InvalidOperationException("自动拾取期间场景已变化。"),
             new InvalidOperationException("装备请求尚未完成。")];
@@ -443,11 +444,24 @@ try
         Console.WriteLine("Beard="+GameItemScheduler.SetFunBeard(int.Parse(args[1])));
     else if(args.Length==2 && args[0]=="fun-hair")
     {GameItemScheduler.SetFunHair(int.Parse(args[1]));Console.WriteLine("Hair mount confirmed");}
+    else if(args.Length==1 && args[0]=="fun-head-read")
+    {
+        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(GameItemScheduler.ReadFunHeadState()));
+        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(GameInventory.Read().Where(item=>item.Name.StartsWith("head_") || item.Category=="hair")));
+    }
     else if(args.Length==1 && args[0]=="fun-hair-read")
         foreach(var item in GameInventory.Read().Where(item=>item.Category=="hair"))
             Console.WriteLine(item.Name+" id="+item.UniqueId+" mounted="+GameItemScheduler.IsItemMounted(item.UniqueId));
     else if(args.Length==1 && args[0]=="fun-selftest")
     {
+        if(GameItemScheduler.FunHairStyles.Length!=7 || GameItemScheduler.FunBeardStyles.Length!=4)
+            throw new Exception("Appearance choices incomplete");
+        foreach(int style in Enumerable.Range(0,8))
+            foreach(bool scar in new[]{false,true}) foreach(bool mark in new[]{false,true}) foreach(bool tattoo in new[]{false,true})
+            {
+                string expected=$"head_{style}"+(scar?"_scar":"")+(mark?"_mark":"")+(tattoo?"_tattoo":"");
+                if(GameItemScheduler.FunHeadName(style,scar,mark,tattoo)!=expected) throw new Exception("Appearance variant lost");
+            }
         if(GameItemScheduler.FunTimeTarget(2*86400+80000,6,15)!=2*86400+6*3600+15*60) throw new Exception("Time day preservation failed");
         foreach(var pair in new[]{(-1,0),(24,0),(12,60)})
         {
