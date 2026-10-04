@@ -1,10 +1,20 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace Witcher3Modifier;
 
 public sealed partial class MainForm : Form
 {
     private bool teleportBusy;
+    private bool closingWithoutGame;
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        var games = System.Diagnostics.Process.GetProcessesByName("witcher3");
+        try { closingWithoutGame = games.Length == 0; }
+        finally { foreach (var game in games) game.Dispose(); }
+        base.OnFormClosing(e);
+    }
+
     private readonly ToolTip usageTips = new() { ShowAlways = true, AutoPopDelay = 15000 };
     private readonly CheckBox saveSettingsToggle = new TrainerSwitch() { Text = "保存开关与倍率", AutoSize = true, Anchor = AnchorStyles.Right, Font = new Font("Microsoft YaHei UI", 18F, FontStyle.Bold, GraphicsUnit.Pixel) };
     private readonly Draft draft;

@@ -2,6 +2,13 @@
 
 [简体中文](CHANGELOG.zh-CN.md)
 
+## 0.1.7 — 2026-10-04
+
+- Fix the trainer remaining open after clicking Close when the game has already exited.
+- Avoid repeated movement and jump restoration requests once shutdown cleanup has finished.
+
+Both language builds and game-absent window-close checks passed. The deployed Chinese executable also closed and reopened successfully with settings preserved. Cleanup while the game is running was not retested.
+
 ## 0.1.6 — 2026-10-04
 
 - Auto-loot now keeps its switch enabled while Geralt is temporarily unavailable during loading or a scene transition, then waits for gameplay to resume.

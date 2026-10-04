@@ -23,7 +23,7 @@ public sealed partial class MainForm
             Shown+=async (_,_)=> {playerMotionReady=true;await RefreshPlayerMotion(false);};
             FormClosing+=async (_,args)=>
             {
-                if(offlinePreview || playerMotionClosed || (!moveSpeedToggle.Checked && !jumpHeightToggle.Checked && !playerMotionBusy)) return;
+                if(closingWithoutGame || offlinePreview || playerMotionClosed || (!moveSpeedToggle.Checked && !jumpHeightToggle.Checked && !playerMotionBusy)) return;
                 args.Cancel=true;
                 if(playerMotionBusy) {status.Text="移动功能正在处理，完成后可关闭修改器";return;}
                 playerMotionClosing=true;
@@ -36,7 +36,7 @@ public sealed partial class MainForm
 
     private async Task RefreshPlayerMotion(bool manual,string? only=null)
     {
-        if(offlinePreview || playerMotionBusy || !playerMotionReady) return;
+        if(offlinePreview || playerMotionClosed || playerMotionBusy || !playerMotionReady) return;
         var requests=new[]{("moveSpeed",moveSpeedToggle.Checked,moveSpeedValue.Value),("jumpHeight",jumpHeightToggle.Checked,jumpHeightValue.Value)}
             .Where(request=>only is null?request.Item2 || playerMotionClosing:request.Item1==only).ToArray();
         if(requests.Length==0) return;

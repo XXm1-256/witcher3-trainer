@@ -1,4 +1,4 @@
-﻿namespace Witcher3Modifier;
+namespace Witcher3Modifier;
 
 public sealed partial class MainForm
 {
@@ -17,7 +17,7 @@ public sealed partial class MainForm
         funActions=grid;
         FormClosing+=(_,eventArgs)=>
         {
-            if(!offlinePreview && !grid.Enabled)
+            if(!closingWithoutGame && !offlinePreview && !grid.Enabled)
             {eventArgs.Cancel=true;status.Text="趣味功能正在处理，完成后可关闭修改器";}
         };
         scroll.Controls.Add(grid); page.Controls.Add(scroll);

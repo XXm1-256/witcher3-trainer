@@ -72,7 +72,7 @@ public sealed partial class MainForm
         RefreshPendingQuantity();
         FormClosing += (_, e) =>
         {
-            if (!itemBatchBusy) return;
+            if (closingWithoutGame || !itemBatchBusy) return;
             e.Cancel = true;
             stopItemBatchRequested = true;
             stopItemBatch.Enabled = false;

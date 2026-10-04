@@ -18,7 +18,7 @@ public sealed partial class MainForm
         FormClosed+=(_,_)=>swimSpeedTimer.Dispose();
         FormClosing+=async (_,args)=>
         {
-            if(offlinePreview || (!swimSpeedBusy && !GameItemScheduler.SwimSpeedHasEffect)) return;
+            if(closingWithoutGame || offlinePreview || (!swimSpeedBusy && !GameItemScheduler.SwimSpeedHasEffect)) return;
             args.Cancel=true;swimSpeedClosing=true;swimSpeedManual=false;swimSpeedTimer.Start();
             status.Text="正在恢复游泳速度，请返回游戏等待完成后关闭";
             await RefreshSwimSpeed();

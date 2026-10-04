@@ -2,7 +2,7 @@
 
 Adjust gold and XP, add items, customize equipment, and turn on combat or exploration helpers as needed.
 
-**[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.6/Witcher3Trainer-v0.1.6-en-win-x64.zip)** · **[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.6/Witcher3Trainer-v0.1.6-zh-CN-win-x64.zip)** · [All releases](https://github.com/XXm1-256/witcher3-trainer/releases)
+**[Download English](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.7/Witcher3Trainer-v0.1.7-en-win-x64.zip)** · **[下载中文版](https://github.com/XXm1-256/witcher3-trainer/releases/download/v0.1.7/Witcher3Trainer-v0.1.7-zh-CN-win-x64.zip)** · [All releases](https://github.com/XXm1-256/witcher3-trainer/releases)
 
 [简体中文介绍](README.zh-CN.md)
 

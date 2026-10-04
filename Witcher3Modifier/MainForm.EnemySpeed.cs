@@ -26,7 +26,7 @@ public sealed partial class MainForm
         FormClosed+=(_,_)=>enemySpeedTimer.Dispose();
         FormClosing+=async (_,eventArgs)=>
         {
-            if(offlinePreview || (!enemySpeedBusy && !GameItemScheduler.EnemySpeedHasEffects)) return;
+            if(closingWithoutGame || offlinePreview || (!enemySpeedBusy && !GameItemScheduler.EnemySpeedHasEffects)) return;
             eventArgs.Cancel=true;
             enemySpeedClosing=true;enemySpeedManual=false;
             enemySpeedTimer.Start();

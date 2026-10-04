@@ -31,7 +31,7 @@ public sealed partial class MainForm
         FormClosing+=(_,args)=>
         {
             Volatile.Write(ref autoLootRequested,0);autoLootTimer.Stop();
-            if(autoLootBusy){args.Cancel=true;autoLootClosing=true;status.Text="正在完成当前容器拾取并释放查询结果";}
+            if(!closingWithoutGame && autoLootBusy){args.Cancel=true;autoLootClosing=true;status.Text="正在完成当前容器拾取并释放查询结果";}
         };
         FormClosed+=(_,_)=>autoLootTimer.Dispose();
         return WithFeatureShortcut(autoLootToggle,"autoLoot");

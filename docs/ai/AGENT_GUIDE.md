@@ -34,3 +34,7 @@ Public evidence must be sanitized. Do not commit live heap addresses as reusable
 ## Learning tasks
 
 Trace gold editing from MainForm to GameMoney. Trace a native scheduler request through completion and timeout. Trace inventory instance identity into equipment validation. Explain auto-loot's private query flags, general entity storage, eligibility filters and deferred destructor. Then propose a focused offline regression before attempting new runtime work.
+
+## Release changelog
+
+For each update, append a dated version entry to CHANGELOG.md and CHANGELOG.zh-CN.md. Keep both descriptions aligned, preserve previous entries, and summarize the same changes in the GitHub release body. State pending gameplay verification accurately.

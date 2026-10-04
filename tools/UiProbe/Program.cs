@@ -20,6 +20,30 @@ internal static class Program
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
         T Field<T>(string name) => (T)typeof(MainForm).GetField(name, flags)!.GetValue(form)!;
         void Guard(string name) => typeof(MainForm).GetField(name, flags)!.SetValue(form, true);
+        if(Environment.GetCommandLineArgs().Contains("--close-without-game"))
+        {
+            var games=System.Diagnostics.Process.GetProcessesByName("witcher3");
+            try { if(games.Length!=0) throw new Exception("Close probe requires the game to be closed"); }
+            finally { foreach(var game in games) game.Dispose(); }
+            form.Show();
+            Application.DoEvents();
+            typeof(MainForm).GetField("offlinePreview",flags)!.SetValue(form,false);
+            foreach(string name in new[]{"playerMotionBusy","enemySpeedBusy","swimSpeedBusy","autoLootBusy","itemBatchBusy"}) Guard(name);
+            Field<Panel>("funActions").Enabled=false;
+            Field<CheckBox>("moveSpeedToggle").Checked=true;
+            Field<CheckBox>("jumpHeightToggle").Checked=true;
+            var args=new FormClosingEventArgs(CloseReason.UserClosing,false);
+            typeof(MainForm).GetMethod("OnFormClosing",flags)!.Invoke(form,[args]);
+            if(args.Cancel) throw new Exception("Closing was blocked after the game exited");
+            if(Field<bool>("playerMotionClosing") || Field<bool>("enemySpeedClosing") || Field<bool>("swimSpeedClosing"))
+                throw new Exception("Closing attempted game cleanup after exit");
+            if(Field<int>("autoLootRequested")!=0) throw new Exception("Auto loot requests continued during close");
+            form.Close();
+            Application.DoEvents();
+            if(!form.IsDisposed) throw new Exception("The actual window did not close");
+            Console.WriteLine("Game absent: actual window closed with all operation guards busy; no game cleanup started");
+            return;
+        }
         if(Environment.GetCommandLineArgs().Contains("--item-batch"))
         {
             var catalog=Field<ListBox>("itemCatalog");

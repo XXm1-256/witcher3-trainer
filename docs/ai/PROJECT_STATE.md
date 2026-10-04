@@ -41,3 +41,7 @@ The English initial UI passed 578 control checks. Offline tests cover batch part
 ## 0.1.6 auto-loot readiness
 
 A recorded load transition reached FunTarget during returned-array cleanup and reported that Geralt was unavailable. This readiness message was missing from IsAutoLootWait and entered the fatal branch, persisting OFF. The exact InvalidOperationException message now waits without changing the requested switch or array ownership. Both language classification probes passed; gameplay recovery remains pending observation.
+
+## 0.1.7 window shutdown
+
+Game-absent shutdown was blocked by movement restoration attempts and busy-operation guards. OnFormClosing now captures process presence before dispatching existing handlers. Those guards permit shutdown once the game has exited; auto-loot still stops accepting work. Player motion restoration is skipped after its completed cleanup. --close-without-game exercises a real window with all busy guards set, requires the game to be closed, and never invokes game cleanup. Both language probes passed; the deployed Chinese executable closed and reopened with settings preserved. Live-game cleanup remains unchanged and was not retested.
