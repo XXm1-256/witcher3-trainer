@@ -6,6 +6,7 @@ try
     {
         Exception[] waiting=[new TimeoutException("装备查询正在等待游戏运行。"),
             new InvalidOperationException("游戏场景正在切换，请稍后重试。"),
+            new InvalidOperationException("请在杰洛特的实际游玩场景使用此功能。"),
             new InvalidOperationException("未能确认玩家对象结构，本次操作未执行；请先载入存档。"),
             new InvalidOperationException("自动拾取期间场景已变化。"),
             new InvalidOperationException("装备请求尚未完成。")];

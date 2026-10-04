@@ -37,3 +37,7 @@ MainForm.ItemBatch.cs reuses Give serially. Preserve each result and unconfirmed
 The inventory hook exempts 87 head/hair NameIds from keep-items removal blocking. Its configuration uses +0xA00/+0xA04, capped at 128 entries. Rebind for each process/name pool; NameIds are not portable across processes. Only initial WithInventory object-traversal read failures count as scene waits; operation-internal read/type/code failures remain errors. Beard changes use the existing RememberCustomHead script. Mounted-item readback is not proof of face rendering or save persistence.
 
 The English initial UI passed 578 control checks. Offline tests cover batch partial failure/stop/no replay and category/name/level intersections with hidden-selection protection. Actual item batches, face recovery and the latest load recovery await player observation.
+
+## 0.1.6 auto-loot readiness
+
+A recorded load transition reached FunTarget during returned-array cleanup and reported that Geralt was unavailable. This readiness message was missing from IsAutoLootWait and entered the fatal branch, persisting OFF. The exact InvalidOperationException message now waits without changing the requested switch or array ownership. Both language classification probes passed; gameplay recovery remains pending observation.

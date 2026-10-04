@@ -2,6 +2,13 @@
 
 [简体中文](CHANGELOG.zh-CN.md)
 
+## 0.1.6 — 2026-10-04
+
+- Auto-loot now keeps its switch enabled while Geralt is temporarily unavailable during loading or a scene transition, then waits for gameplay to resume.
+- Adds regression coverage for this readiness message. Code, type and data validation failures still stop the feature and write a log.
+
+Both language builds and offline readiness checks passed. Recovery across actual save loads still needs player feedback.
+
 ## 0.1.5 — 2026-10-04
 
 - Queue items with individual quantities, submit a whole list, inspect per-item results and stop after the current entry. Completed and unconfirmed entries are not resubmitted.
