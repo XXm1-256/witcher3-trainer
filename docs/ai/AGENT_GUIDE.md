@@ -2,6 +2,8 @@
 
 [简体中文](AGENT_GUIDE.zh-CN.md)
 
+Start with [COLD_START](COLD_START.md). Source routing and address candidates are in [TECHNICAL_MAP](TECHNICAL_MAP.md); historical failures and revisit criteria are in [FAILURE_LEDGER](FAILURE_LEDGER.md).
+
 Start by reading README, DEVELOPMENT, PROJECT_STATE and VERSION_MIGRATION. Use screenshots, logs and extracted material to investigate behavior. Confirm the current task's permission before modifying a running game.
 
 ## Before changing code

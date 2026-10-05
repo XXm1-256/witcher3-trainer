@@ -65,3 +65,5 @@ To build the trainer, change a feature or learn how it works, start with the [de
 ## New in 0.1.5
 
 Build a list of items, set each quantity and add the whole list in one action. Filter your inventory by item type alongside names and required levels. Appearance options now include seven hairstyles, fixed beard styles and clearly labeled stubble stages. See [release notes](CHANGELOG.md) for details.
+
+For a new maintainer or AI agent, follow the [cold-start guide](docs/ai/COLD_START.md), [source map](docs/ai/TECHNICAL_MAP.md) and [failure history](docs/ai/FAILURE_LEDGER.md).

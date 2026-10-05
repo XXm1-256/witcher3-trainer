@@ -63,3 +63,5 @@
 ## 0.1.5 新增内容
 
 物品可以先加入清单、逐件设置数量，再一次添加。背包新增物品类型筛选，可和名称、等级一起使用。外观选项补入第七种发型、固定胡须款式，并明确标出胡茬阶段。详情见[更新记录](CHANGELOG.zh-CN.md)。
+
+新维护者或AI Agent可按[冷启动指南](docs/ai/COLD_START.zh-CN.md)、[源码路线图](docs/ai/TECHNICAL_MAP.zh-CN.md)和[失败记录](docs/ai/FAILURE_LEDGER.zh-CN.md)接手。

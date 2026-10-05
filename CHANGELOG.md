@@ -2,6 +2,11 @@
 
 [简体中文](CHANGELOG.zh-CN.md)
 
+## Documentation — 2026-10-05
+
+- Add a standalone cold-start route, feature/address/data map and 16 paired failure records with evidence boundaries and revisit criteria.
+- Add an offline address inventory and checks for stale source references and public links. Runtime executables remain v0.1.7.
+
 ## 0.1.7 — 2026-10-04
 
 - Fix the trainer remaining open after clicking Close when the game has already exited.

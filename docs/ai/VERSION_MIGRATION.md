@@ -73,3 +73,7 @@ Report addresses as RVAs with a fingerprint, not timeless absolute VAs. Reopen a
 ## Appearance entries and name pools
 
 Current 5.00c appearance checks include reference RVAs 0x20FB310 (SetCustomHead), 0x20FB240 (RemoveCustomHead) and RememberCustomHead script parameters. Resolve registrations/metadata and original instructions again after updates. NameIds, head pointers, mounted unique IDs and hook-page addresses are per-run data and must be resolved fresh. Do not read primitive CName metadata with class/struct layouts. Resolve the empty CName from a byte-validated game default. For void calls use execution status and field readback, not the first return-buffer byte.
+
+## Source inventory before migration
+
+Use [TECHNICAL_MAP](TECHNICAL_MAP.md) and [address-inventory.json](address-inventory.json) to find every mapped RVA and lexical call site, including direct module literals outside the profile. The index does not capture all field offsets, variable arguments or encoded machine-code operands; read the affected code. Run `python scripts/check_handoff.py` to reject a stale index. Consult [FAILURE_LEDGER](FAILURE_LEDGER.md) before revisiting a recorded failure.

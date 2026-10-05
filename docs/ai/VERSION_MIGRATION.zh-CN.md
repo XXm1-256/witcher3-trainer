@@ -71,3 +71,7 @@ GameVersion将旧参考RVA映射至5.00c：
 ## 外观入口与名称池
 
 5.00c当前外观核对包括SetCustomHead参考RVA 0x20FB310、RemoveCustomHead 0x20FB240，以及RememberCustomHead脚本参数。更新后分别重新定位注册/元数据与原始指令。名称池NameId、玩家头部地址、mounted unique ID和hook页地址都是本次运行数据，应重新解析。不能用类/结构布局直接解释primitive CName元数据；空CName从经过字节检查的游戏默认值取得。void调用以执行状态与字段回读核对，不能把返回缓冲首字节当成功标志。
+
+## 迁移前的源码清单
+
+从[TECHNICAL_MAP](TECHNICAL_MAP.zh-CN.md)和[address-inventory.json](address-inventory.json)查全部映射RVA与字面量调用位置，包括绕过映射的module直接地址。索引不能覆盖全部字段偏移、变量传参或编码机器码操作数，仍要读受影响源码。运行`python scripts/check_handoff.py`拒绝过期索引；再次尝试旧路径前查[FAILURE_LEDGER](FAILURE_LEDGER.zh-CN.md)。

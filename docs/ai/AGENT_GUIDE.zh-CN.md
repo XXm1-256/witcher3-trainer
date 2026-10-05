@@ -2,6 +2,8 @@
 
 [English](AGENT_GUIDE.md)
 
+从[COLD_START](COLD_START.zh-CN.md)开始；源码入口与地址候选见[TECHNICAL_MAP](TECHNICAL_MAP.zh-CN.md)，历史失败与重开依据见[FAILURE_LEDGER](FAILURE_LEDGER.zh-CN.md)。
+
 先阅读README、开发教程、PROJECT_STATE和VERSION_MIGRATION。使用截图、日志和解包材料调查问题。修改正在运行的游戏前，确认当前任务的授权范围。
 
 ## 修改代码前
