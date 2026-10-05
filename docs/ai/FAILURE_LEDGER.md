@@ -101,6 +101,8 @@ Updated 2026-10-05; code baseline v0.1.7. These are sanitized technical summarie
 - [Shortcuts](../../Witcher3Modifier/MainForm.Shortcuts.cs) register only while the game is foreground and release through the master switch. Hidden-page dispatch cannot depend on Button.PerformClick selectability. Offline checks must not play sounds.
 - Revisit with a focused reproducer when changing those templates, layouts or registration. Breaking numeric input in other applications is a defect, not an acceptable hotkey cost.
 
+The 2026-10-05 cold-checkout audit also found that byte-for-byte source hashes falsely reported stale indexes after Git newline normalization; the index now hashes UTF-8 text with LF and no BOM. Generated English UiProbe --quiet also has Chinese-copy assertion assumptions; use the documented EnglishProbe route instead of interpreting these failures as production defects.
+
 ## Maintaining this ledger
 
 Keep identifiers stable. Append explicit corrections when new evidence changes an entry and link dated investigations from current state. Do not generalize limited checks to all scenarios. New registration, ABI, lifecycle or behavior evidence may justify revisiting an older contract on a new game version.

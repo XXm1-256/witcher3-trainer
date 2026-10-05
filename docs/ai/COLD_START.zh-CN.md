@@ -47,6 +47,16 @@ dotnet run --project .build/en/tools/UiProbe/UiProbe.csproj -c Release -- --clos
 
 这两条会短暂显示测试窗口。`--item-batch` 使用假执行器，验证部分完成、停止和避免重复提交，也会绘制测试界面。其他探针不能仅凭名称判断安全：`gear-numeric-probe` 会生成装备，`autoloot-query` 即使不取物也可能安装调度入口和执行游戏查询，`swim-neutral-check` 可能写入动画来源。执行前读 [HookProbe 分支](../../tools/HookProbe/Program.cs)。
 
+英文界面使用EnglishProbe检查生成文字并离线绘制页面：
+
+```powershell
+dotnet run --project .build/en/tools/EnglishProbe/EnglishProbe.csproj -c Release
+dotnet run --project .build/en/tools/HookProbe/HookProbe.csproj -c Release -- version-selftest
+dotnet run --project .build/en/tools/HookProbe/HookProbe.csproj -c Release -- autoloot-recovery-offline
+```
+
+界面探针安排在短暂测试窗口或绘制不会打扰玩家时执行。完整UiProbe --quiet当前包含面向中文文案的断言，直接对生成英文源码执行会在提示/预览文字判断上失败，不能作为英文验收入口。这是测试语言限制，不是游戏功能故障的证据。
+
 ## 3. 根据当前任务选路
 
 | 情况 | 最先检查 | 完成标准 |

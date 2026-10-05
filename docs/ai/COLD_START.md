@@ -47,6 +47,16 @@ dotnet run --project .build/en/tools/UiProbe/UiProbe.csproj -c Release -- --clos
 
 These briefly show a test window. `--item-batch` uses a fake executor to verify partial completion, stopping and avoiding duplicate submissions; it also draws a test UI. Do not infer other probes' safety from their names: `gear-numeric-probe` creates equipment, `autoloot-query` can install scheduling code and execute queries even without transferring items, and `swim-neutral-check` can write an animation source. Read the [HookProbe branch](../../tools/HookProbe/Program.cs) before execution.
 
+English UI checks use `EnglishProbe`, which inspects generated text and renders the pages offline:
+
+```powershell
+dotnet run --project .build/en/tools/EnglishProbe/EnglishProbe.csproj -c Release
+dotnet run --project .build/en/tools/HookProbe/HookProbe.csproj -c Release -- version-selftest
+dotnet run --project .build/en/tools/HookProbe/HookProbe.csproj -c Release -- autoloot-recovery-offline
+```
+
+Run UI probes when a brief test window or rendering will not interrupt the player. The full `UiProbe --quiet` assertions currently target Chinese copy; running that mode on generated English source fails on translated hint/preview expectations and is not the English acceptance route. This is a test-language limitation, not evidence that gameplay is broken.
+
 ## 3. Choose a route for the task
 
 | Situation | First evidence | Completion condition |
