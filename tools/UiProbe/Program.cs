@@ -20,8 +20,6 @@ internal static class Program
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
         T Field<T>(string name) => (T)typeof(MainForm).GetField(name, flags)!.GetValue(form)!;
         void Guard(string name) => typeof(MainForm).GetField(name, flags)!.SetValue(form, true);
-        static bool HasLevelHint(string? text) => text is not null &&
-            (text.Contains("需要等级") || text.Contains("required level", StringComparison.OrdinalIgnoreCase));
         if(Environment.GetCommandLineArgs().Contains("--close-without-game"))
         {
             var games=System.Diagnostics.Process.GetProcessesByName("witcher3");
@@ -392,9 +390,9 @@ internal static class Program
             var tips=Field<ToolTip>("usageTips");
             foreach(var group in new[]{quietNumbers,Field<Dictionary<string,(CheckBox Use,NumericUpDown Value)>>("editNumericFields")})
                 foreach(string id in new[]{"damage","armor"})
-                    if(HasLevelHint(tips.GetToolTip(group[id].Use))!=true)
+                    if(tips.GetToolTip(group[id].Use)?.Contains("需要等级")!=true)
                         throw new Exception("Equipment level limitation hint missing");
-            if(HasLevelHint(tips.GetToolTip(quietNumbers["damage"].Value))!=true || HasLevelHint(tips.GetToolTip(quietNumbers["armor"].Value))!=true)
+            if(tips.GetToolTip(quietNumbers["damage"].Value)?.Contains("需要等级")!=true || tips.GetToolTip(quietNumbers["armor"].Value)?.Contains("需要等级")!=true)
                 throw new Exception("Generated equipment numeric hint missing");
             foreach(string name in new[]{"Burning Rose Sword","Bear Armor 4","DLC1 Temerian Armor"})
             {
@@ -513,7 +511,7 @@ internal static class Program
                 typeof(MainForm).GetMethod("SetInventoryBusy",flags)!.Invoke(form,[false]);
             }
             LoadFakeEquipment("steelsword",new(){{"damage",63},{"poison",25}});
-            if(HasLevelHint(tips.GetToolTip(editNumbers["damage"].Value))!=true) throw new Exception("Loading equipment erased level hint");
+            if(tips.GetToolTip(editNumbers["damage"].Value)?.Contains("需要等级")!=true) throw new Exception("Loading equipment erased level hint");
             var editList=Field<CheckedListBox>("editAffixes");
             int editArmorOnly=EffectIndex(editList,"MA_SlashingResistance");
             editList.SetItemChecked(editArmorOnly,true);
