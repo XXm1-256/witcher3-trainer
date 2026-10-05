@@ -34,7 +34,7 @@
 - 修正：[FindTick](../../Witcher3Modifier/GameItemScheduler.cs) 按当前实际触发函数元数据核对。调度不在任意外部线程直接调用游戏对象。
 - 边界：新版本重新验证真实调用频率与游戏线程；有名称和注册并不等于此场景会执行，暂停时仍可延迟。
 
-## F06：把超时当作“没有添加”，再发一次（2026-09-30）
+## F06：把超时当作“没有添加”（2026-09-30）
 
 - 现象/依据：银锭显示失败但已经增加，后台请求后来完成。
 - 修正：[Give/Execute](../../Witcher3Modifier/GameItemScheduler.cs) 与 [ItemBatch](../../Witcher3Modifier/MainForm.ItemBatch.cs) 保留同一请求，按库存差确认；完成或未确认项目不自动重发。

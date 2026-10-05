@@ -34,7 +34,7 @@ Updated 2026-10-05; code baseline v0.1.7. These are sanitized technical summarie
 - Correction: [FindTick](../../Witcher3Modifier/GameItemScheduler.cs) validates the actual triggering function's metadata. Scheduling avoids calling game objects directly from an arbitrary external thread.
 - Boundary: recheck execution frequency and the game thread for a new version. A registered name does not guarantee execution in the current scene; pause may delay processing.
 
-## F06: Timeout was treated as no addition and the mutation was replayed (2026-09-30)
+## F06: Timeout was treated as proof of no addition (2026-09-30)
 
 - Observation: a silver ingot was reported as failed although inventory increased; the queued request completed later.
 - Correction: [Give/Execute](../../Witcher3Modifier/GameItemScheduler.cs) and [ItemBatch](../../Witcher3Modifier/MainForm.ItemBatch.cs) retain one request and confirm inventory deltas. Completed and unconfirmed entries are not automatically resubmitted.
