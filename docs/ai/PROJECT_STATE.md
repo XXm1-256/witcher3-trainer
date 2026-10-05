@@ -45,3 +45,7 @@ A recorded load transition reached FunTarget during returned-array cleanup and r
 ## 0.1.7 window shutdown
 
 Game-absent shutdown was blocked by movement restoration attempts and busy-operation guards. OnFormClosing now captures process presence before dispatching existing handlers. Those guards permit shutdown once the game has exited; auto-loot still stops accepting work. Player motion restoration is skipped after its completed cleanup. --close-without-game exercises a real window with all busy guards set, requires the game to be closed, and never invokes game cleanup. Both language probes passed; the deployed Chinese executable closed and reopened with settings preserved. Live-game cleanup remains unchanged and was not retested.
+
+## 2026-10-05 maintenance handoff
+
+Start with [COLD_START](COLD_START.md), [TECHNICAL_MAP](TECHNICAL_MAP.md) and [FAILURE_LEDGER](FAILURE_LEDGER.md). [The audit record](history/2026-10-05-handoff-audit.md) documents the clean-checkout builds, offline checks, source-index newline correction and language-specific probe limitation. Runtime source remains v0.1.7.

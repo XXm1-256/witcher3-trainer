@@ -45,3 +45,7 @@
 ## 0.1.7 窗口关闭
 
 游戏退出后，移动恢复与忙碌保护仍阻止窗口关闭。OnFormClosing在触发现有处理前记录游戏进程是否存在；不存在时关闭保护放行，自动拾取仍停止接收请求。移动参数完成关闭恢复后不再重复请求。--close-without-game要求游戏已退出，建立真实窗口并设置全部忙碌保护，不调用游戏清理。中英文检查通过，中文正式程序关闭、重开且配置保持。游戏运行中的清理行为保留，本轮未实测。
+
+## 2026-10-05 维护接档
+
+从[COLD_START](COLD_START.zh-CN.md)、[TECHNICAL_MAP](TECHNICAL_MAP.zh-CN.md)与[FAILURE_LEDGER](FAILURE_LEDGER.zh-CN.md)接手。[审查记录](history/2026-10-05-handoff-audit.zh-CN.md)保存干净副本构建、离线检查、索引换行修正及探针语言限制。运行时代码仍为v0.1.7。
