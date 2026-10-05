@@ -20,8 +20,10 @@ def source_inventory():
     sites, direct, hashes = [], [], {}
     for path in files:
         name = path.relative_to(ROOT).as_posix()
-        hashes[name] = hashlib.sha256(path.read_bytes()).hexdigest()
-        for number, line in enumerate(path.read_text(encoding='utf-8-sig').splitlines(), 1):
+        source = path.read_text(encoding='utf-8-sig')
+        # Git may normalize CRLF and a BOM; index semantic text instead of checkout bytes.
+        hashes[name] = hashlib.sha256(source.encode('utf-8')).hexdigest()
+        for number, line in enumerate(source.splitlines(), 1):
             # Lexical candidates only: variable calls and encoded template operands need manual review.
             for match in re.finditer(r'(GameVersion\.Rva|ExecuteEquipmentNative|FunCheck)\((?:handle\s*,\s*module\s*,\s*)?(0x[0-9A-Fa-f]+)', line):
                 sites.append({'file': name, 'line': number, 'resolver': match[1],
@@ -30,6 +32,7 @@ def source_inventory():
                 direct.append({'file': name, 'line': number, 'expression': match[0],
                                'candidate_rva': match[2].upper(), 'context': line.strip()})
     return {'schema': 1, 'baseline': 'v0.1.7 runtime source',
+            'source_hash_normalization': 'UTF-8 without BOM, universal-newline LF text',
             'scope': 'Lexical source index; not target-binary validation or a complete address resolver',
             'profile_selector_sha256': selector[1],
             'profile_mappings': [{'reference_rva': a.upper(), 'profile_rva': b.upper()} for a, b in mappings],

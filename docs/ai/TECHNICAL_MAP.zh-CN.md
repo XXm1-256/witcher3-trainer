@@ -36,7 +36,7 @@
 - `profile_mappings`：GameVersion内全部参考RVA→5.00c RVA；数值相同也必须在新版本验证。
 - `literal_sites`：GameVersion.Rva、ExecuteEquipmentNative和FunCheck传入字面量的位置及上下文。
 - `direct_module_literals`：直接与module/baseAddress相加的十六进制候选，可能绕过映射；必须人工判定用途。
-- `source_sha256`：清单来源文件指纹，用来检查索引是否过期。
+- `source_sha256`：清单来源文件指纹，按无BOM的UTF-8、LF换行文本计算，避免Git换行转换误报，用来检查索引是否过期。
 
 ```powershell
 python scripts/check_handoff.py

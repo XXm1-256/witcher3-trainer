@@ -36,7 +36,7 @@ The following files are in [Witcher3Modifier](../../Witcher3Modifier).
 - `profile_mappings`: every reference RVA to 5.00c RVA pair from GameVersion. Equal values still need verification on a new version.
 - `literal_sites`: literal arguments passed to GameVersion.Rva, ExecuteEquipmentNative and FunCheck, with source context.
 - `direct_module_literals`: hexadecimal candidates added directly to module/baseAddress and potentially outside the mapping; manually determine their role.
-- `source_sha256`: source fingerprints used to detect stale inventory.
+- `source_sha256`: source fingerprints used to detect stale inventory, calculated as UTF-8 text without BOM and with LF newlines so Git checkout conversions do not cause false failures.
 
 ```powershell
 python scripts/check_handoff.py
